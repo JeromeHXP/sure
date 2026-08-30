@@ -50,6 +50,12 @@ en:
         category: Category
         change: Change
         percent: "%"
+      anomaly_title: Anomalies
+      anomaly_subtitle: Categories whose latest month deviates significantly from their period average
+      anomaly_average: Average
+      anomaly_latest: Latest
+      top_title: Where Your Money Goes
+      top_total: Total
     period_labels:
       last_6_months: "%{start} to %{end}"
       last_12_months: "%{start} to %{end}"

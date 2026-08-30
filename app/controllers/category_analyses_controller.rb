@@ -65,6 +65,13 @@ class CategoryAnalysesController < ApplicationController
     # before it. Half the @monthly_data months form each half.
     @comparison_data = build_comparison_data
 
+    # Anomaly detection: flag categories whose latest month deviates
+    # significantly from their period average.
+    @anomalies = build_anomaly_data
+
+    # Top-N "where does my money go": ranking by total spend over the period.
+    @top_categories = build_top_categories
+
     # Build category options for selector
     @category_options = build_category_options
 
@@ -310,6 +317,92 @@ class CategoryAnalysesController < ApplicationController
 
   def empty_comparison
     { rows: [], current_total: 0, previous_total: 0, total_change: 0, total_pct: 0, available: false }
+  end
+
+  def build_anomaly_data
+    return [] unless @monthly_data.any?
+
+    months_with_data = @monthly_data.select { |m| m[:segments].any? }
+    return [] if months_with_data.size < 2
+
+    # Collect monthly values per category across the period
+    by_category = Hash.new { |h, k| h[k] = [] }
+    months_with_data.each do |m|
+      m[:segments].each do |s|
+        by_category[s[:category_id]] << s[:value]
+      end
+    end
+
+    anomalies = []
+    by_category.each do |category_id, values|
+      next if values.size < 2
+
+      latest = values.last
+      rest = values[0...-1]
+      avg = rest.sum / rest.size.to_f
+      next if avg <= 0 && latest <= 0
+
+      # Standard deviation of the historical months (excluding latest)
+      variance = rest.map { |v| (v - avg) ** 2 }.sum / rest.size.to_f
+      std = Math.sqrt(variance)
+
+      # An anomaly: the latest month deviates from the average by more than
+      # one standard deviation (or >50% if std is zero/degenerate). We also
+      # require a meaningful absolute difference to avoid noise on tiny amounts.
+      deviation = latest - avg
+      pct_dev = avg > 0 ? (deviation / avg) * 100 : (latest > 0 ? 100 : 0)
+      threshold = std > 0 ? std : avg * 0.5
+      is_anomaly = deviation.abs > threshold && deviation.abs > 1
+
+      next unless is_anomaly
+
+      category = @selected_categories.find { |c| c.id == category_id }
+      next unless category
+
+      anomalies << {
+        category_id: category_id,
+        name: category.display_name,
+        color: category.color,
+        icon: category.lucide_icon,
+        latest: latest,
+        average: avg.round(2),
+        deviation: deviation.round(2),
+        pct_dev: pct_dev.round(1),
+        direction: deviation > 0 ? :up : :down
+      }
+    end
+
+    anomalies.sort_by! { |a| -a[:deviation].abs }
+    anomalies
+  end
+
+  def build_top_categories
+    return [] unless @monthly_data.any?
+
+    by_category = Hash.new(0)
+    @monthly_data.each do |m|
+      m[:segments].each { |s| by_category[s[:category_id]] += s[:value] }
+    end
+
+    total = by_category.values.sum
+    return [] if total <= 0
+
+    rows = by_category.map do |category_id, amount|
+      category = @selected_categories.find { |c| c.id == category_id }
+      next unless category
+
+      {
+        category_id: category_id,
+        name: category.display_name,
+        color: category.color,
+        icon: category.lucide_icon,
+        amount: amount,
+        percentage: ((amount / total) * 100).round(1)
+      }
+    end.compact
+
+    rows.sort_by! { |r| -r[:amount] }
+    { rows: rows, total: total }
   end
 
   def build_category_options

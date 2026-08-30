@@ -50,6 +50,12 @@ ro:
         category: Categorie
         change: Schimbare
         percent: "%"
+      anomaly_title: Anomalii
+      anomaly_subtitle: Categorii a căror ultimă lună se abate semnificativ de la media perioadei
+      anomaly_average: Medie
+      anomaly_latest: Ultima
+      top_title: Unde se duc banii tăi
+      top_total: Total
     period_labels:
       last_6_months: "%{start} - %{end}"
       last_12_months: "%{start} - %{end}"

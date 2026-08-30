@@ -50,6 +50,12 @@ tr:
         category: Kategori
         change: Değişim
         percent: "%"
+      anomaly_title: Anomaliler
+      anomaly_subtitle: Son ayı dönem ortalamasından belirgin şekilde sapan kategoriler
+      anomaly_average: Ortalama
+      anomaly_latest: Son
+      top_title: Paranız nereye gidiyor
+      top_total: Toplam
     period_labels:
       last_6_months: "%{start} - %{end}"
       last_12_months: "%{start} - %{end}"

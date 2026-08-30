@@ -50,6 +50,12 @@ ru:
         category: Категория
         change: Изменение
         percent: "%"
+      anomaly_title: Аномалии
+      anomaly_subtitle: Категории, последний месяц которых значительно отклоняется от среднего за период
+      anomaly_average: Среднее
+      anomaly_latest: Последний
+      top_title: Куда уходят ваши деньги
+      top_total: Итого
     period_labels:
       last_6_months: "%{start} — %{end}"
       last_12_months: "%{start} — %{end}"

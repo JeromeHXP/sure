@@ -50,6 +50,12 @@ it:
         category: Categoria
         change: Variazione
         percent: "%"
+      anomaly_title: Anomalie
+      anomaly_subtitle: Categorie il cui ultimo mese si discosta significativamente dalla media del periodo
+      anomaly_average: Media
+      anomaly_latest: Ultimo
+      top_title: Dove va il tuo denaro
+      top_total: Totale
     period_labels:
       last_6_months: "%{start} a %{end}"
       last_12_months: "%{start} a %{end}"

@@ -50,6 +50,12 @@ nb:
         category: Kategori
         change: Endring
         percent: "%"
+      anomaly_title: Avvik
+      anomaly_subtitle: Kategorier der siste måned avviker betydelig fra periodens gjennomsnitt
+      anomaly_average: Gjennomsnitt
+      anomaly_latest: Siste
+      top_title: Hvis pengene dine går
+      top_total: Totalt
     period_labels:
       last_6_months: "%{start} til %{end}"
       last_12_months: "%{start} til %{end}"

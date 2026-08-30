@@ -50,6 +50,12 @@ hu:
         category: Kategória
         change: Változás
         percent: "%"
+      anomaly_title: Anomáliák
+      anomaly_subtitle: Kategóriák, amelyek utolsó hónapja jelentősen eltér az időszaki átlagtól
+      anomaly_average: Átlag
+      anomaly_latest: Legutóbbi
+      top_title: Hová megy a pénzed
+      top_total: Összesen
     period_labels:
       last_6_months: "%{start} – %{end}"
       last_12_months: "%{start} – %{end}"

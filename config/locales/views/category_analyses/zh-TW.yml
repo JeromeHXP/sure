@@ -48,6 +48,12 @@ zh-TW:
         category: 分類
         change: 變化
         percent: "%"
+      anomaly_title: 異常
+      anomaly_subtitle: 最近一個月明顯偏離其週期平均值的分類
+      anomaly_average: 平均
+      anomaly_latest: 最新
+      top_title: 您的錢去向
+      top_total: 合計
     period_labels:
       last_6_months: "%{start} 至 %{end}"
       last_12_months: "%{start} 至 %{end}"

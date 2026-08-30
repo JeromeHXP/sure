@@ -50,6 +50,12 @@ vi:
         category: Danh mục
         change: Thay đổi
         percent: "%"
+      anomaly_title: Bất thường
+      anomaly_subtitle: Danh mục có tháng gần nhất lệch đáng kể so với trung bình kỳ
+      anomaly_average: Trung bình
+      anomaly_latest: Gần nhất
+      top_title: Tiền của bạn đi đâu
+      top_total: Tổng
     period_labels:
       last_6_months: "%{start} đến %{end}"
       last_12_months: "%{start} đến %{end}"

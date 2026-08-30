@@ -50,6 +50,12 @@ pt-BR:
         category: Categoria
         change: Variação
         percent: "%"
+      anomaly_title: Anomalias
+      anomaly_subtitle: Categorias cujo último mês se desvia significativamente da média do período
+      anomaly_average: Média
+      anomaly_latest: Último
+      top_title: Para onde vai seu dinheiro
+      top_total: Total
     period_labels:
       last_6_months: "%{start} a %{end}"
       last_12_months: "%{start} a %{end}"

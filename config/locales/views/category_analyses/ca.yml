@@ -50,6 +50,12 @@ ca:
         category: Categoria
         change: Canvi
         percent: "%"
+      anomaly_title: Anomalies
+      anomaly_subtitle: Categories l'últim mes de les quals es desvia significativament de la seva mitjana del període
+      anomaly_average: Mitjana
+      anomaly_latest: Últim
+      top_title: On van els teus diners
+      top_total: Total
     period_labels:
       last_6_months: "%{start} a %{end}"
       last_12_months: "%{start} a %{end}"

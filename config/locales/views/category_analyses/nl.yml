@@ -50,6 +50,12 @@ nl:
         category: Categorie
         change: Verschil
         percent: "%"
+      anomaly_title: Afwijkende waarden
+      anomaly_subtitle: Categorieën waarvan de laatste maand aanzienlijk afwijkt van hun periodegemiddelde
+      anomaly_average: Gemiddelde
+      anomaly_latest: Laatste
+      top_title: Waar je geld heen gaat
+      top_total: Totaal
     period_labels:
       last_6_months: "%{start} t/m %{end}"
       last_12_months: "%{start} t/m %{end}"

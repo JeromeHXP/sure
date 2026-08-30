@@ -50,6 +50,12 @@ uk:
         category: Категорія
         change: Зміна
         percent: "%"
+      anomaly_title: Аномалії
+      anomaly_subtitle: Категорії, останній місяць яких значно відхиляється від їхнього середнього за період
+      anomaly_average: Середнє
+      anomaly_latest: Останній
+      top_title: Куди йдуть ваші гроші
+      top_total: Разом
     period_labels:
       last_6_months: "%{start} — %{end}"
       last_12_months: "%{start} — %{end}"

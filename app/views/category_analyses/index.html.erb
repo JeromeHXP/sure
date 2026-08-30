@@ -74,14 +74,6 @@
         </div>
 
         <span class="text-primary font-medium text-lg lg:text-base"><%= @nav[:label] %></span>
-
-        <div class="ml-auto">
-          <%= render DS::Link.new(
-            text: t("category_analyses.index.today"),
-            variant: "outline",
-            href: category_analyses_path(period_type: @period_type, category_ids: @selected_category_ids, account_ids: @selected_account_ids),
-          ) %>
-        </div>
       </div>
     <% end %>
   </div>
@@ -453,6 +445,92 @@
             <% end %>
           </tbody>
         </table>
+      </div>
+    </section>
+  <% end %>
+
+  <%# Anomaly detection %>
+  <% if @anomalies.any? %>
+    <section class="bg-container rounded-xl shadow-border-xs p-4">
+      <h2 class="text-lg font-medium mb-2"><%= t("category_analyses.index.anomaly_title") %></h2>
+      <p class="text-sm text-secondary mb-4"><%= t("category_analyses.index.anomaly_subtitle") %></p>
+
+      <div class="space-y-2">
+        <% @anomalies.each do |anomaly| %>
+          <div class="flex items-center justify-between p-3 rounded-lg bg-container-inset gap-3">
+            <div class="flex items-center gap-2 min-w-0 flex-1">
+              <span class="h-3 w-3 rounded-full shrink-0" style="background-color: <%= anomaly[:color] %>;"></span>
+              <% if anomaly[:icon] %>
+                <%= icon(anomaly[:icon], size: "sm", color: "current") %>
+              <% end %>
+              <span class="text-sm font-medium text-primary truncate"><%= anomaly[:name] %></span>
+            </div>
+
+            <div class="flex items-center gap-4 flex-shrink-0 text-right">
+              <div class="text-right">
+                <p class="text-xs text-secondary"><%= t("category_analyses.index.anomaly_average") %></p>
+                <p class="text-sm text-secondary tabular-nums privacy-sensitive"><%= format_money Money.new(anomaly[:average], Current.family.currency) %></p>
+              </div>
+              <div class="text-right">
+                <p class="text-xs text-secondary"><%= t("category_analyses.index.anomaly_latest") %></p>
+                <p class="text-sm font-medium tabular-nums privacy-sensitive"><%= format_money Money.new(anomaly[:latest], Current.family.currency) %></p>
+              </div>
+              <div class="text-right min-w-[80px]">
+                <% if anomaly[:direction] == :up %>
+                  <span class="inline-flex items-center gap-1 text-sm text-destructive tabular-nums">
+                    <%= icon("arrow-up-right", size: "sm") %>
+                    +<%= anomaly[:pct_dev] %>%
+                  </span>
+                <% else %>
+                  <span class="inline-flex items-center gap-1 text-sm text-success tabular-nums">
+                    <%= icon("arrow-down-right", size: "sm") %>
+                    <%= anomaly[:pct_dev] %>%
+                  </span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <%# Top-N "where does my money go" %>
+  <% if @top_categories.is_a?(Hash) && @top_categories[:rows]&.any? %>
+    <section class="bg-container rounded-xl shadow-border-xs p-4">
+      <h2 class="text-lg font-medium mb-4"><%= t("category_analyses.index.top_title") %></h2>
+
+      <div class="space-y-1">
+        <% @top_categories[:rows].each_with_index do |row, idx| %>
+          <div class="flex items-center gap-3 p-3 rounded-lg group hover:bg-container-inset-hover">
+            <span class="w-6 text-sm font-medium text-subdued tabular-nums text-right"><%= idx + 1 %></span>
+
+            <div class="h-7 w-7 flex-shrink-0 rounded-full flex justify-center items-center"
+              style="background-color: color-mix(in oklab, <%= row[:color] %> 10%, transparent); color: <%= row[:color] %>;">
+              <% if row[:icon] %>
+                <%= icon(row[:icon], color: "current", size: "sm") %>
+              <% end %>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-sm font-medium text-primary truncate"><%= row[:name] %></span>
+                <span class="text-sm font-medium text-primary tabular-nums privacy-sensitive whitespace-nowrap"><%= format_money Money.new(row[:amount], Current.family.currency) %></span>
+              </div>
+              <div class="mt-1.5 flex items-center gap-2">
+                <div class="h-2 rounded-full bg-container-inset flex-1 overflow-hidden">
+                  <div class="h-full rounded-full transition-all duration-500" style="width: <%= row[:percentage] %>%; background-color: <%= row[:color] %>;"></div>
+                </div>
+                <span class="text-xs text-secondary tabular-nums w-12 text-right"><%= row[:percentage] %>%</span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mt-4 pt-4 border-t border-tertiary flex items-center justify-between">
+        <span class="text-sm text-secondary"><%= t("category_analyses.index.top_total") %></span>
+        <span class="text-lg font-semibold text-primary tabular-nums privacy-sensitive"><%= format_money Money.new(@top_categories[:total], Current.family.currency) %></span>
       </div>
     </section>
   <% end %>
