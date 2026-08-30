@@ -45,8 +45,47 @@ class CategoryAnalysesController < ApplicationController
     # Get selected categories, preserving the alphabetical-by-hierarchy order
     # so the chart legend and table columns are stable. Compare as strings
     # because params arrive as strings but `pluck(:id)` returns UUID objects.
-    selected_set = @selected_category_ids.map(&:to_s).to_set
+    #
+    # Rollup: selecting a parent category automatically includes all its
+    # subcategories (matching the IncomeStatement behavior where a parent's
+    # total counts its children). We expand the selected set to include
+    # children, then display only roots (plus orphan children whose parent
+    # is not selected) with each parent's value summed over its children.
+    parent_to_children = @all_categories.group_by(&:parent_id)
+
+    expanded = @selected_category_ids.map(&:to_s).to_set
+    @all_categories.each do |cat|
+      next unless cat.parent_id.nil?
+      if expanded.include?(cat.id.to_s)
+        (parent_to_children[cat.id] || []).each { |child| expanded << child.id.to_s }
+      end
+    end
+    @selected_category_ids = expanded.to_a
+
+    selected_set = expanded
     @selected_categories = @all_categories.select { |c| selected_set.include?(c.id.to_s) }
+
+    # Display categories: selected roots + selected children whose parent is
+    # NOT selected (those show standalone instead of rolling into a parent).
+    @display_categories = @all_categories.select do |c|
+      if c.parent_id.nil?
+        selected_set.include?(c.id.to_s)
+      else
+        selected_set.include?(c.id.to_s) && !selected_set.include?(c.parent_id.to_s)
+      end
+    end
+
+    # Map each display category to the member category IDs that roll up to it:
+    # a root includes itself + all its children; a standalone subcategory is
+    # just itself.
+    @member_ids_for_display = {}
+    @display_categories.each do |dc|
+      @member_ids_for_display[dc.id] = if dc.parent_id.nil?
+        [dc.id] + (parent_to_children[dc.id] || []).map(&:id)
+      else
+        [dc.id]
+      end
+    end
 
     # Build monthly data for selected categories
     @monthly_data = build_monthly_category_data
@@ -136,13 +175,10 @@ class CategoryAnalysesController < ApplicationController
       current_month = current_month >> 1 # Next month
     end
 
-    # Build the selected category IDs list, ordered to match @selected_categories
+    # Query by all selected category IDs (parents + their children).
     category_ids = @selected_categories.map(&:id)
     return months.map { |m| { month: m, month_label: I18n.l(m, format: :short_month_year), is_current: m == Date.current, segments: [], total: 0 } } if category_ids.empty?
 
-    # A single grouped query: sum positive amounts (expenses) and the absolute
-    # value of negative amounts (income) per category, per calendar month.
-    # `entries.amount > 0` = expense, `entries.amount < 0` = income in this codebase.
     raw_rows = Current.family.transactions
       .joins(:entry)
       .where(category_id: category_ids)
@@ -155,43 +191,46 @@ class CategoryAnalysesController < ApplicationController
         Arel.sql("SUM(CASE WHEN entries.amount < 0 THEN ABS(entries.amount) ELSE 0 END)")
       )
 
-    # Index results by [category_id, month] for O(1) lookup
-    totals_by_key = {}
+    # Index raw per-(category_id, month) totals
+    raw_by_key = {}
     raw_rows.each do |category_id, month_date, expense_total, income_total|
       next if month_date.nil?
-      month_key = month_date.to_date
-      totals_by_key[[category_id, month_key]] = {
+      raw_by_key[[category_id, month_date.to_date]] = {
         expenses: expense_total.to_d,
         income: income_total.to_d
       }
     end
 
-    # Build chart data, one entry per month with all categories nested as
-    # stackable segments. The chart stacks expense amounts per category so
-    # the user can see where their money goes each month.
+    # Aggregate by display category: each display category sums its member
+    # category IDs (a root rolls up itself + children; a standalone child
+    # is just itself).
     chart_data = []
 
     months.each do |month|
       segments = []
       total = 0
 
-      @selected_categories.each do |category|
-        totals = totals_by_key[[category.id, month]]
-        next unless totals
-
-        # Stack expenses (the primary "where does my money go" view).
-        # `.to_f` so the value serializes as a JSON number, not a string
-        # (BigDecimal becomes a quoted string under as_json).
-        if totals[:expenses] > 0
-          segments << {
-            category_id: category.id,
-            name: category.display_name,
-            color: category.color,
-            value: totals[:expenses].to_f,
-            income: totals[:income].to_f
-          }
-          total += totals[:expenses]
+      @display_categories.each do |dc|
+        member_ids = @member_ids_for_display[dc.id]
+        expenses = 0
+        income = 0
+        member_ids.each do |mid|
+          t = raw_by_key[[mid, month]]
+          next unless t
+          expenses += t[:expenses]
+          income += t[:income]
         end
+
+        next unless expenses > 0
+
+        segments << {
+          category_id: dc.id,
+          name: dc.display_name,
+          color: dc.color,
+          value: expenses.to_f,
+          income: income.to_f
+        }
+        total += expenses
       end
 
       chart_data << {
@@ -212,7 +251,7 @@ class CategoryAnalysesController < ApplicationController
 
     total = month_data[:total]
     segments = month_data[:segments].map do |seg|
-      category = @selected_categories.find { |c| c.id == seg[:category_id] }
+      category = @display_categories.find { |c| c.id == seg[:category_id] }
       {
         id: seg[:category_id],
         name: seg[:name],
@@ -240,16 +279,18 @@ class CategoryAnalysesController < ApplicationController
     prev_end = (current_start - 1.day).end_of_month
     prev_start = (prev_end - period_days.days + 1).beginning_of_month
 
+    # All selected category IDs (parents + children) for the query
     category_ids = @selected_categories.map(&:id)
     return empty_comparison if category_ids.empty?
 
-    # Reuse the already-computed current-period data (no extra query)
+    # Reuse the already-computed current-period data (aggregated by display
+    # category, no extra query)
     current_by_cat = Hash.new(0)
     @monthly_data.each do |m|
       m[:segments].each { |s| current_by_cat[s[:category_id]] += s[:value] }
     end
 
-    # One grouped query for the previous period
+    # One grouped query for the previous period, by raw category_id
     prev_rows = Current.family.transactions
       .joins(:entry)
       .where(category_id: category_ids)
@@ -260,13 +301,21 @@ class CategoryAnalysesController < ApplicationController
         Arel.sql("SUM(CASE WHEN entries.amount > 0 THEN entries.amount ELSE 0 END)")
       )
 
-    previous_by_cat = Hash.new(0)
+    prev_raw_by_cat = Hash.new(0)
     prev_rows.each do |category_id, expense_total|
-      previous_by_cat[category_id] = expense_total.to_f
+      prev_raw_by_cat[category_id] = expense_total.to_f
     end
 
-    # Build one row per category that has activity in either period
-    rows = @selected_categories.map do |category|
+    # Roll the previous period up by display category
+    previous_by_cat = Hash.new(0)
+    @display_categories.each do |dc|
+      sum = 0.0
+      @member_ids_for_display[dc.id].each { |mid| sum += prev_raw_by_cat[mid] }
+      previous_by_cat[dc.id] = sum
+    end
+
+    # Build one row per display category that has activity in either period
+    rows = @display_categories.map do |category|
       current_val = current_by_cat[category.id] || 0
       previous_val = previous_by_cat[category.id] || 0
       change = current_val - previous_val
@@ -356,7 +405,7 @@ class CategoryAnalysesController < ApplicationController
 
       next unless is_anomaly
 
-      category = @selected_categories.find { |c| c.id == category_id }
+      category = @display_categories.find { |c| c.id == category_id }
       next unless category
 
       anomalies << {
@@ -388,7 +437,7 @@ class CategoryAnalysesController < ApplicationController
     return [] if total <= 0
 
     rows = by_category.map do |category_id, amount|
-      category = @selected_categories.find { |c| c.id == category_id }
+      category = @display_categories.find { |c| c.id == category_id }
       next unless category
 
       {

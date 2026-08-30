@@ -84,20 +84,6 @@
   <section class="bg-container rounded-xl shadow-border-xs p-4">
     <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
       <h2 class="text-lg font-medium"><%= t("category_analyses.index.select_categories") %></h2>
-      <div class="flex items-center gap-2">
-        <%= render DS::Link.new(
-              text: t("category_analyses.index.select_all"),
-              variant: "ghost",
-              size: "sm",
-              href: category_analyses_path(period_type: @period_type, account_ids: @selected_account_ids),
-            ) %>
-        <%= render DS::Link.new(
-              text: t("category_analyses.index.unselect_all"),
-              variant: "ghost",
-              size: "sm",
-              href: category_analyses_path(period_type: @period_type, category_ids: "none", account_ids: @selected_account_ids),
-            ) %>
-      </div>
     </div>
 
     <%= form_with url: category_analyses_path, method: :get, data: { controller: "auto-submit-form" }, class: "flex flex-wrap items-center gap-3" do |f| %>
@@ -117,12 +103,22 @@
           ) do |popover| %>
         <% popover.with_button type: "button", class: "inline-flex items-center gap-2 px-3 py-2 text-sm font-medium border border-primary rounded-lg hover:bg-surface-hover" do %>
           <%= icon("tags", size: "sm") %>
-          <span><%= t("category_analyses.index.categories", count: @selected_categories.size) %></span>
+          <span><%= t("category_analyses.index.categories", count: @display_categories.size) %></span>
           <%= icon("chevron-down", size: "sm") %>
         <% end %>
 
         <% popover.with_custom_content do %>
           <div class="p-2 space-y-2" data-controller="list-filter">
+            <div class="flex items-center gap-2 px-1">
+              <%= link_to t("category_analyses.index.select_all"),
+                    category_analyses_path(period_type: @period_type, account_ids: @selected_account_ids),
+                    class: "text-xs font-medium text-secondary hover:text-primary px-2 py-1 rounded-md hover:bg-container-inset-hover" %>
+              <span class="text-subdued">·</span>
+              <%= link_to t("category_analyses.index.unselect_all"),
+                    category_analyses_path(period_type: @period_type, category_ids: "none", account_ids: @selected_account_ids),
+                    class: "text-xs font-medium text-secondary hover:text-primary px-2 py-1 rounded-md hover:bg-container-inset-hover" %>
+            </div>
+
             <%= render DS::SearchInput.new(
                   variant: :embedded,
                   placeholder: t("category_analyses.index.search_placeholder"),
@@ -133,7 +129,7 @@
                   }
                 ) %>
 
-            <div class="max-h-72 overflow-auto" data-list-filter-target="list">
+            <div class="max-h-72 overflow-auto" data-list-filter-target="list" data-controller="category-tree">
               <% @category_options.each do |group| %>
                 <% gid = group[:id].to_s %>
                 <div class="filterable-item flex items-center gap-2 py-1.5 px-1" data-filter-name="<%= group[:name] %>">
@@ -142,7 +138,11 @@
                                     @selected_category_ids.include?(gid),
                                     id: "category_#{gid}",
                                     class: "checkbox checkbox--light",
-                                    data: { auto_submit_form_target: "auto" } %>
+                                    data: {
+                                      auto_submit_form_target: "auto",
+                                      category_tree_target: "checkbox",
+                                      action: "change->category-tree#toggle"
+                                    } %>
                   <label for="category_<%= gid %>" class="flex items-center gap-1.5 cursor-pointer text-sm text-primary flex-1">
                     <% if group[:icon] %>
                       <%= icon(group[:icon], size: "sm", color: "current") %>
@@ -159,7 +159,11 @@
                                       @selected_category_ids.include?(sid),
                                       id: "category_#{sid}",
                                       class: "checkbox checkbox--light",
-                                      data: { auto_submit_form_target: "auto" } %>
+                                      data: {
+                                        auto_submit_form_target: "auto",
+                                        category_tree_target: "checkbox",
+                                        parent_id: gid
+                                      } %>
                     <label for="category_<%= sid %>" class="flex items-center gap-1.5 cursor-pointer text-sm text-secondary flex-1">
                       <%= icon("corner-down-right", size: "sm") %>
                       <% if sub[:icon] %>
@@ -225,10 +229,11 @@
     <h2 class="text-lg font-medium mb-4"><%= t("category_analyses.index.chart_title") %></h2>
 
     <% if @monthly_data.any? { |m| m[:segments].any? } %>
-      <div data-controller="category-histogram"
+      <div class="relative"
+        data-controller="category-histogram"
         data-category-histogram-data-value="<%= @monthly_data.to_json %>"
         data-category-histogram-currency-value="<%= Current.family.currency %>">
-        <div class="h-[400px] lg:h-[500px] relative">
+        <div class="h-[400px] lg:h-[500px]">
           <div data-category-histogram-target="chartContainer" class="absolute inset-0"></div>
         </div>
         <div data-category-histogram-target="legend" class="flex flex-wrap gap-x-3 gap-y-1.5 mt-4 pt-4 border-t border-tertiary"></div>
@@ -545,7 +550,7 @@
           <thead class="text-secondary uppercase tracking-wider">
             <tr>
               <th class="px-4 py-3 text-left font-medium"><%= t("category_analyses.index.table.month") %></th>
-              <% @selected_categories.each do |category| %>
+              <% @display_categories.each do |category| %>
                 <th class="px-4 py-3 text-right font-medium whitespace-nowrap"><%= category.display_name %></th>
               <% end %>
               <th class="px-4 py-3 text-right font-medium"><%= t("category_analyses.index.table.total") %></th>
@@ -564,7 +569,7 @@
                 </td>
 
                 <% month_total = 0 %>
-                <% @selected_categories.each do |category| %>
+                <% @display_categories.each do |category| %>
                   <% seg = month_data[:segments].find { |s| s[:category_id] == category.id } %>
                   <% value = seg ? seg[:value] : 0 %>
                   <% month_total += value %>
