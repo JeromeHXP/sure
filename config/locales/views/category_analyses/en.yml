@@ -39,6 +39,17 @@ en:
       empty_state:
         title: No categories with transactions
         message: Create some transactions and assign them to categories to see the evolution analysis
+      donut_title: Breakdown by Category
+      select_month: Select Month
+      donut_empty: No data for the selected month
+      donut_total: Total
+      comparison_title: Comparison vs. Previous Period
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Change
+      comparison_table:
+        category: Category
+        change: Change
+        percent: "%"
     period_labels:
       last_6_months: "%{start} to %{end}"
       last_12_months: "%{start} to %{end}"

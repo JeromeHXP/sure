@@ -1,0 +1,57 @@
+---
+pt-BR:
+  category_analyses:
+    index:
+      title: Análise de evolução por categorias
+      subtitle: Acompanhe como suas despesas e receitas evoluem por categoria ao longo do tempo
+      period_aria: Selecione o período de análise
+      periods:
+        last_6_months: Últimos 6 meses
+        last_12_months: Últimos 12 meses
+        year_to_date: Ano até hoje
+        custom: Intervalo personalizado
+      date_range:
+        from: De
+        to: Até
+      previous_period: Período anterior
+      next_period: Próximo período
+      today: Hoje
+      select_categories: Selecionar categorias
+      select_all: Selecionar tudo
+      unselect_all: Desmarcar tudo
+      select_accounts: Selecionar contas
+      filter_accounts_all: Todas as contas
+      filter_accounts:
+        one: "%{count} conta"
+        other: "%{count} contas"
+      search_accounts: Filtrar contas…
+      categories:
+        one: "%{count} categoria"
+        other: "%{count} categorias"
+      search_placeholder: Filtrar categorias…
+      chart_title: Evolução mensal
+      table_title: Detalhamento mensal
+      table:
+        month: Mês
+        total: Total
+      current_month: Atual
+      no_data: Nenhum dado disponível para o período e as categorias selecionados
+      empty_state:
+        title: Nenhuma categoria com transações
+        message: Crie transações e atribua-as a categorias para ver a análise de evolução
+      donut_title: Detalhamento por categoria
+      select_month: Selecionar mês
+      donut_empty: Sem dados para o mês selecionado
+      donut_total: Total
+      comparison_title: Comparação com período anterior
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Variação
+      comparison_table:
+        category: Categoria
+        change: Variação
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} a %{end}"
+      last_12_months: "%{start} a %{end}"
+      year_to_date: "%{year} Ano até hoje"
+      custom: "%{start} a %{end}"

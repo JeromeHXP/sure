@@ -1,0 +1,57 @@
+---
+it:
+  category_analyses:
+    index:
+      title: Analisi dell'evoluzione per categorie
+      subtitle: Segui come si evolvono le spese e le entrate per categoria nel tempo
+      period_aria: Seleziona il periodo di analisi
+      periods:
+        last_6_months: Ultimi 6 mesi
+        last_12_months: Ultimi 12 mesi
+        year_to_date: Anno in corso
+        custom: Intervallo personalizzato
+      date_range:
+        from: Dal
+        to: Al
+      previous_period: Periodo precedente
+      next_period: Periodo successivo
+      today: Oggi
+      select_categories: Seleziona categorie
+      select_all: Seleziona tutto
+      unselect_all: Deseleziona tutto
+      select_accounts: Seleziona conti
+      filter_accounts_all: Tutti i conti
+      filter_accounts:
+        one: "%{count} conto"
+        other: "%{count} conti"
+      search_accounts: Filtra conti…
+      categories:
+        one: "%{count} categoria"
+        other: "%{count} categorie"
+      search_placeholder: Filtra categorie…
+      chart_title: Evoluzione mensile
+      table_title: Dettaglio mensile
+      table:
+        month: Mese
+        total: Totale
+      current_month: Attuale
+      no_data: Nessun dato disponibile per il periodo e le categorie selezionati
+      empty_state:
+        title: Nessuna categoria con transazioni
+        message: Crea transazioni e assegna loro categorie per vedere l'analisi dell'evoluzione
+      donut_title: Dettaglio per categoria
+      select_month: Seleziona mese
+      donut_empty: Nessun dato per il mese selezionato
+      donut_total: Totale
+      comparison_title: Confronto con periodo precedente
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Variazione
+      comparison_table:
+        category: Categoria
+        change: Variazione
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} a %{end}"
+      last_12_months: "%{start} a %{end}"
+      year_to_date: "%{year} Anno in corso"
+      custom: "%{start} a %{end}"

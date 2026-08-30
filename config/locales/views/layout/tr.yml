@@ -10,6 +10,7 @@ tr:
         home: Ana Sayfa
         reports: Raporlar
         transactions: İşlemler
+        category_analysis: Analiz
       privacy_mode: Gizlilik modunu değiştir
       resize_left_sidebar: Hesaplar kenar çubuğunu yeniden boyutlandır
       resize_right_sidebar: Asistan kenar çubuğunu yeniden boyutlandır

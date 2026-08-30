@@ -1,0 +1,57 @@
+---
+nl:
+  category_analyses:
+    index:
+      title: Analyse van categorieontwikkeling
+      subtitle: Volg hoe je uitgaven en inkomsten per categorie in de loop van de tijd veranderen
+      period_aria: Analyseperiode selecteren
+      periods:
+        last_6_months: Laatste 6 maanden
+        last_12_months: Laatste 12 maanden
+        year_to_date: Jaar tot heden
+        custom: Aangepaste periode
+      date_range:
+        from: Van
+        to: Tot
+      previous_period: Vorige periode
+      next_period: Volgende periode
+      today: Vandaag
+      select_categories: Categorieën selecteren
+      select_all: Alles selecteren
+      unselect_all: Alles deselecteren
+      select_accounts: Rekeningen selecteren
+      filter_accounts_all: Alle rekeningen
+      filter_accounts:
+        one: "%{count} rekening"
+        other: "%{count} rekeningen"
+      search_accounts: Rekeningen filteren…
+      categories:
+        one: "%{count} categorie"
+        other: "%{count} categorieën"
+      search_placeholder: Categorieën filteren…
+      chart_title: Maandelijkse ontwikkeling
+      table_title: Maandelijks overzicht
+      table:
+        month: Maand
+        total: Totaal
+      current_month: Huidig
+      no_data: Geen gegevens beschikbaar voor de geselecteerde periode en categorieën
+      empty_state:
+        title: Geen categorieën met transacties
+        message: Maak transacties en wijs categorieën toe om de ontwikkelingsanalyse te zien
+      donut_title: Uitsplitsing per categorie
+      select_month: Maand selecteren
+      donut_empty: Geen gegevens voor de geselecteerde maand
+      donut_total: Totaal
+      comparison_title: Vergelijking met vorige periode
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Verschil
+      comparison_table:
+        category: Categorie
+        change: Verschil
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} t/m %{end}"
+      last_12_months: "%{start} t/m %{end}"
+      year_to_date: "%{year} Jaar tot heden"
+      custom: "%{start} t/m %{end}"

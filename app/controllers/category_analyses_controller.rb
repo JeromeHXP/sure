@@ -51,6 +51,20 @@ class CategoryAnalysesController < ApplicationController
     # Build monthly data for selected categories
     @monthly_data = build_monthly_category_data
 
+    # Donut: breakdown by category for a selected month.
+    # Default to the most recent month that actually has segments.
+    @donut_month = parse_date_param(:donut_month)
+    months_with_data = @monthly_data.select { |m| m[:segments].any? }
+    if @donut_month.nil?
+      @donut_month = months_with_data.any? ? months_with_data.last[:month] : @period.start_date.beginning_of_month
+    end
+    @donut_segments, @donut_total = build_donut_data(@donut_month)
+
+    # Comparison vs. previous period: per-category change between the
+    # current period's totals and the same-length period immediately
+    # before it. Half the @monthly_data months form each half.
+    @comparison_data = build_comparison_data
+
     # Build category options for selector
     @category_options = build_category_options
 
@@ -183,6 +197,119 @@ class CategoryAnalysesController < ApplicationController
     end
 
     chart_data
+  end
+
+  def build_donut_data(month)
+    month_data = @monthly_data.find { |m| m[:month] == month }
+    return [], 0 unless month_data && month_data[:segments].any?
+
+    total = month_data[:total]
+    segments = month_data[:segments].map do |seg|
+      category = @selected_categories.find { |c| c.id == seg[:category_id] }
+      {
+        id: seg[:category_id],
+        name: seg[:name],
+        amount: seg[:value],
+        color: seg[:color],
+        icon: category&.lucide_icon,
+        percentage: total > 0 ? ((seg[:value] / total) * 100).round(1) : 0,
+        clickable: false,
+        currency: Current.family.currency
+      }
+    end.sort_by { |s| -s[:amount] }
+
+    [ segments, total ]
+  end
+
+  def build_comparison_data
+    return empty_comparison unless @period
+
+    # Compare the current period against the equal-length period immediately
+    # before it. For a 6-month window (Mar–Aug) the previous period is the
+    # preceding 6 months (Sep–Feb); for YTD it's the same span last year.
+    current_start = @period.start_date.beginning_of_month
+    current_end = @period.end_date.end_of_month
+    period_days = (current_end - current_start).to_i + 1
+    prev_end = (current_start - 1.day).end_of_month
+    prev_start = (prev_end - period_days.days + 1).beginning_of_month
+
+    category_ids = @selected_categories.map(&:id)
+    return empty_comparison if category_ids.empty?
+
+    # Reuse the already-computed current-period data (no extra query)
+    current_by_cat = Hash.new(0)
+    @monthly_data.each do |m|
+      m[:segments].each { |s| current_by_cat[s[:category_id]] += s[:value] }
+    end
+
+    # One grouped query for the previous period
+    prev_rows = Current.family.transactions
+      .joins(:entry)
+      .where(category_id: category_ids)
+      .where(entries: { date: prev_start..prev_end, account_id: @selected_account_ids })
+      .group("category_id")
+      .pluck(
+        "category_id",
+        Arel.sql("SUM(CASE WHEN entries.amount > 0 THEN entries.amount ELSE 0 END)")
+      )
+
+    previous_by_cat = Hash.new(0)
+    prev_rows.each do |category_id, expense_total|
+      previous_by_cat[category_id] = expense_total.to_f
+    end
+
+    # Build one row per category that has activity in either period
+    rows = @selected_categories.map do |category|
+      current_val = current_by_cat[category.id] || 0
+      previous_val = previous_by_cat[category.id] || 0
+      change = current_val - previous_val
+      pct = if previous_val > 0
+        ((change / previous_val) * 100).round(1)
+      elsif current_val > 0
+        100.0 # new spending where there was none
+      else
+        0.0
+      end
+
+      {
+        category_id: category.id,
+        name: category.display_name,
+        color: category.color,
+        icon: category.lucide_icon,
+        current: current_val,
+        previous: previous_val,
+        change: change,
+        pct: pct
+      }
+    end.reject { |r| r[:current] == 0 && r[:previous] == 0 }
+
+    rows.sort_by! { |r| -r[:change].abs }
+
+    current_total = current_by_cat.values.sum
+    previous_total = previous_by_cat.values.sum
+    total_change = current_total - previous_total
+    total_pct = if previous_total > 0
+      ((total_change / previous_total) * 100).round(1)
+    elsif current_total > 0
+      100.0
+    else
+      0.0
+    end
+
+    {
+      rows: rows,
+      current_total: current_total,
+      previous_total: previous_total,
+      total_change: total_change,
+      total_pct: total_pct,
+      available: true,
+      current_label: "#{I18n.l(current_start, format: :short_month_year)} – #{I18n.l(current_end, format: :short_month_year)}",
+      previous_label: "#{I18n.l(prev_start, format: :short_month_year)} – #{I18n.l(prev_end, format: :short_month_year)}"
+    }
+  end
+
+  def empty_comparison
+    { rows: [], current_total: 0, previous_total: 0, total_change: 0, total_pct: 0, available: false }
   end
 
   def build_category_options

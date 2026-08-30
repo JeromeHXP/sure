@@ -10,6 +10,7 @@ pl:
         home: Strona główna
         reports: Raporty
         transactions: Transakcje
+        category_analysis: Analiza
     auth:
       existing_account: Masz już konto?
       no_account: Nowy użytkownik w %{product_name}?

@@ -39,6 +39,17 @@ fr:
       empty_state:
         title: Aucune catégorie avec des transactions
         message: Créez des transactions et attribuez-les à des catégories pour voir l'analyse d'évolution
+      donut_title: Répartition par catégorie
+      select_month: Sélectionner le mois
+      donut_empty: Aucune donnée pour le mois sélectionné
+      donut_total: Total
+      comparison_title: Comparaison vs. période précédente
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Évolution
+      comparison_table:
+        category: Catégorie
+        change: Évolution
+        percent: "%"
     period_labels:
       last_6_months: "Du %{start} au %{end}"
       last_12_months: "Du %{start} au %{end}"

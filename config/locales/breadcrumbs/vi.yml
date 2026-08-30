@@ -16,6 +16,7 @@ vi:
     budgets: Ngân sách
     categories: Danh mục
     categorize: Phân loại
+    category_analyses: Phân tích danh mục
     chats: Trò chuyện
     coinbase_items: Coinbase
     coinstats_items: CoinStats

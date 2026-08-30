@@ -1,0 +1,57 @@
+---
+ro:
+  category_analyses:
+    index:
+      title: Analiza evoluției pe categorii
+      subtitle: Urmărește cum evoluează cheltuielile și veniturile pe categorii în timp
+      period_aria: Selectează perioada de analiză
+      periods:
+        last_6_months: Ultimele 6 luni
+        last_12_months: Ultimele 12 luni
+        year_to_date: Anul până acum
+        custom: Interval personalizat
+      date_range:
+        from: De la
+        to: Până la
+      previous_period: Perioada anterioară
+      next_period: Perioada următoare
+      today: Astăzi
+      select_categories: Selectează categorii
+      select_all: Selectează tot
+      unselect_all: Deselectează tot
+      select_accounts: Selectează conturi
+      filter_accounts_all: Toate conturile
+      filter_accounts:
+        one: "%{count} cont"
+        other: "%{count} de conturi"
+      search_accounts: Filtrează conturi…
+      categories:
+        one: "%{count} categorie"
+        other: "%{count} de categorii"
+      search_placeholder: Filtrează categorii…
+      chart_title: Evoluție lunară
+      table_title: Defalcare lunară
+      table:
+        month: Luna
+        total: Total
+      current_month: Curent
+      no_data: Nu există date disponibile pentru perioada și categoriile selectate
+      empty_state:
+        title: Nicio categorie cu tranzacții
+        message: Creează tranzacții și atribuie-le categorii pentru a vedea analiza evoluției
+      donut_title: Defalcare pe categorie
+      select_month: Selectează luna
+      donut_empty: Nicio dată pentru luna selectată
+      donut_total: Total
+      comparison_title: Comparare cu perioada anterioară
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Schimbare
+      comparison_table:
+        category: Categorie
+        change: Schimbare
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} - %{end}"
+      last_12_months: "%{start} - %{end}"
+      year_to_date: "%{year} Anul până acum"
+      custom: "%{start} - %{end}"

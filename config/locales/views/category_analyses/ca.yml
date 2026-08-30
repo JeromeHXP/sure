@@ -1,0 +1,57 @@
+---
+ca:
+  category_analyses:
+    index:
+      title: Anàlisi de l'evolució per categories
+      subtitle: Segueix com evolucionen les teves despeses i ingressos per categoria al llarg del temps
+      period_aria: Selecciona el període d'anàlisi
+      periods:
+        last_6_months: Últims 6 mesos
+        last_12_months: Últims 12 mesos
+        year_to_date: Any fins avui
+        custom: Rang personalitzat
+      date_range:
+        from: Des de
+        to: Fins a
+      previous_period: Període anterior
+      next_period: Període següent
+      today: Avui
+      select_categories: Selecciona categories
+      select_all: Selecciona-ho tot
+      unselect_all: Desselecciona-ho tot
+      select_accounts: Selecciona comptes
+      filter_accounts_all: Tots els comptes
+      filter_accounts:
+        one: "%{count} compte"
+        other: "%{count} comptes"
+      search_accounts: Filtra comptes…
+      categories:
+        one: "%{count} categoria"
+        other: "%{count} categories"
+      search_placeholder: Filtra categories…
+      chart_title: Evolució mensual
+      table_title: Desglossament mensual
+      table:
+        month: Mes
+        total: Total
+      current_month: Actual
+      no_data: No hi ha dades disponibles per al període i les categories seleccionades
+      empty_state:
+        title: Sense categories amb transaccions
+        message: Crea transaccions i assigna-les a categories per veure l'anàlisi d'evolució
+      donut_title: Desglossament per categoria
+      select_month: Selecciona mes
+      donut_empty: Sense dades per al mes seleccionat
+      donut_total: Total
+      comparison_title: Comparació amb el període anterior
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Canvi
+      comparison_table:
+        category: Categoria
+        change: Canvi
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} a %{end}"
+      last_12_months: "%{start} a %{end}"
+      year_to_date: "%{year} Any fins avui"
+      custom: "%{start} a %{end}"

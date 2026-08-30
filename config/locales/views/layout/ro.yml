@@ -10,6 +10,7 @@ ro:
         home: Acasă
         reports: Rapoarte
         transactions: Tranzacții
+        category_analysis: Analiză
     auth:
       existing_account: Ai deja un cont?
       no_account: Ești nou pe %{product_name}?

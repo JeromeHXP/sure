@@ -1,0 +1,57 @@
+---
+de:
+  category_analyses:
+    index:
+      title: Analyse der Kategorieentwicklung
+      subtitle: Verfolgen Sie, wie sich Ausgaben und Einnahmen über Kategorien hinweg entwickeln
+      period_aria: Analysezeitraum auswählen
+      periods:
+        last_6_months: Letzte 6 Monate
+        last_12_months: Letzte 12 Monate
+        year_to_date: Jahr bis heute
+        custom: Benutzerdefinierter Zeitraum
+      date_range:
+        from: Von
+        to: Bis
+      previous_period: Vorheriger Zeitraum
+      next_period: Nächster Zeitraum
+      today: Heute
+      select_categories: Kategorien auswählen
+      select_all: Alle auswählen
+      unselect_all: Alle abwählen
+      select_accounts: Konten auswählen
+      filter_accounts_all: Alle Konten
+      filter_accounts:
+        one: "%{count} Konto"
+        other: "%{count} Konten"
+      search_accounts: Konten filtern…
+      categories:
+        one: "%{count} Kategorie"
+        other: "%{count} Kategorien"
+      search_placeholder: Kategorien filtern…
+      chart_title: Monatliche Entwicklung
+      table_title: Monatliche Aufschlüsselung
+      table:
+        month: Monat
+        total: Gesamt
+      current_month: Aktuell
+      no_data: Für den ausgewählten Zeitraum und die Kategorien sind keine Daten verfügbar
+      empty_state:
+        title: Keine Kategorien mit Transaktionen
+        message: Erstellen Sie Transaktionen und weisen Sie ihnen Kategorien zu, um die Entwicklungsanalyse zu sehen
+      donut_title: Aufschlüsselung nach Kategorie
+      select_month: Monat auswählen
+      donut_empty: Keine Daten für den ausgewählten Monat
+      donut_total: Gesamt
+      comparison_title: Vergleich zum Vorzeitraum
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Veränderung
+      comparison_table:
+        category: Kategorie
+        change: Veränderung
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} bis %{end}"
+      last_12_months: "%{start} bis %{end}"
+      year_to_date: "%{year} Jahr bis heute"
+      custom: "%{start} bis %{end}"

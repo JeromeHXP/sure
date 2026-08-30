@@ -13,6 +13,7 @@ uk:
         reports: Звіти
         goals: Цілі
         transactions: Транзакції
+        category_analysis: Аналіз
     auth:
       existing_account: Вже маєте обліковий запис?
       no_account: Вперше на %{product_name}?

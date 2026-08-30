@@ -16,6 +16,7 @@ it:
     budgets: Budget
     categories: Categorie
     categorize: Categorizza
+    category_analyses: Analisi categorie
     chats: Chat
     coinbase_items: Coinbase
     coinstats_items: CoinStats

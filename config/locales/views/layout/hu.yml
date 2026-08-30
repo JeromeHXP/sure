@@ -10,6 +10,7 @@ hu:
         home: Kezdőlap
         reports: Jelentések
         transactions: Tranzakciók
+        category_analysis: Analízis
     auth:
       existing_account: Már van fiókod?
       no_account: Még nem ismered a %{product_name}-t?

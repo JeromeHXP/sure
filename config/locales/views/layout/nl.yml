@@ -10,6 +10,7 @@ nl:
         home: Startpagina
         reports: Rapporten
         transactions: Transacties
+        category_analysis: Analyse
     auth:
       existing_account: Heeft u al een account?
       no_account: Nieuw bij %{product_name}?

@@ -1,0 +1,57 @@
+---
+hu:
+  category_analyses:
+    index:
+      title: Kategoriai fejlődés elemzése
+      subtitle: Kövesd nyomon, hogyan alakulnak a kiadások és bevételek kategóriánként az idő múlásával
+      period_aria: Elemzési időszak kiválasztása
+      periods:
+        last_6_months: Utolsó 6 hónap
+        last_12_months: Utolsó 12 hónap
+        year_to_date: Év elejétől
+        custom: Egyéni időszak
+      date_range:
+        from: -tól
+        to: -ig
+      previous_period: Előző időszak
+      next_period: Következő időszak
+      today: Ma
+      select_categories: Kategóriák kiválasztása
+      select_all: Összes kiválasztása
+      unselect_all: Összes törlése
+      select_accounts: Számlák kiválasztása
+      filter_accounts_all: Összes számla
+      filter_accounts:
+        one: "%{count} számla"
+        other: "%{count} számla"
+      search_accounts: Számlák szűrése…
+      categories:
+        one: "%{count} kategória"
+        other: "%{count} kategória"
+      search_placeholder: Kategóriák szűrése…
+      chart_title: Havi fejlődés
+      table_title: Havi bontás
+      table:
+        month: Hónap
+        total: Összesen
+      current_month: Jelenlegi
+      no_data: Nincs adat a kiválasztott időszakra és kategóriákra
+      empty_state:
+        title: Nincsenek kategóriák tranzakciókkal
+        message: Hozz létre tranzakciókat és rendelj hozzájuk kategóriákat az elemzés megtekintéséhez
+      donut_title: Bontás kategóriánként
+      select_month: Hónap kiválasztása
+      donut_empty: Nincs adat a kiválasztott hónapra
+      donut_total: Összesen
+      comparison_title: Összehasonlítás az előző időszakkal
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Változás
+      comparison_table:
+        category: Kategória
+        change: Változás
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} – %{end}"
+      last_12_months: "%{start} – %{end}"
+      year_to_date: "%{year} Év elejétől"
+      custom: "%{start} – %{end}"

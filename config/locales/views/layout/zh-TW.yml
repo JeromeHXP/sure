@@ -15,6 +15,7 @@ zh-TW:
         reports: 報表
         goals: 目標
         transactions: 交易紀錄
+        category_analysis: 分析
     auth:
       existing_account: 已經有帳號了？
       no_account: 第一次使用 %{product_name} 嗎？

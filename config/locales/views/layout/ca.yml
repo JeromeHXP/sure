@@ -8,6 +8,7 @@ ca:
         home: Inici
         reports: Informes
         transactions: Transaccions
+        category_analysis: Anàlisi
       privacy_mode: Commuta el mode de privadesa
       resize_left_sidebar: Redimensiona la barra lateral de comptes
       resize_right_sidebar: Redimensiona la barra lateral de l'assistent

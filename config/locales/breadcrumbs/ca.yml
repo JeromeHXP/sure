@@ -16,6 +16,7 @@ ca:
     budgets: Pressupostos
     categories: Categories
     categorize: Categoritza
+    category_analyses: Anàlisi de categories
     chats: Xats
     coinbase_items: Coinbase
     coinstats_items: CoinStats

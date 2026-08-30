@@ -1,0 +1,57 @@
+---
+tr:
+  category_analyses:
+    index:
+      title: Kategoriye Göre Gelişim Analizi
+      subtitle: Harcama ve gelirlerinizin kategorilere göre zamanla nasıl değiştiğini takip edin
+      period_aria: Analiz dönemini seçin
+      periods:
+        last_6_months: Son 6 Ay
+        last_12_months: Son 12 Ay
+        year_to_date: Yılbaşından Bugüne
+        custom: Özel Aralık
+      date_range:
+        from: Başlangıç
+        to: Bitiş
+      previous_period: Önceki dönem
+      next_period: Sonraki dönem
+      today: Bugün
+      select_categories: Kategorileri seçin
+      select_all: Tümünü seç
+      unselect_all: Tümünü kaldır
+      select_accounts: Hesapları seçin
+      filter_accounts_all: Tüm Hesaplar
+      filter_accounts:
+        one: "%{count} hesap"
+        other: "%{count} hesap"
+      search_accounts: Hesapları filtrele…
+      categories:
+        one: "%{count} kategori"
+        other: "%{count} kategori"
+      search_placeholder: Kategorileri filtrele…
+      chart_title: Aylık Gelişim
+      table_title: Aylık Döküm
+      table:
+        month: Ay
+        total: Toplam
+      current_month: Güncel
+      no_data: Seçilen dönem ve kategoriler için veri bulunmuyor
+      empty_state:
+        title: İşlem içeren kategori yok
+        message: Gelişim analizini görmek için işlemler oluşturun ve kategorilere atayın
+      donut_title: Kategoriye göre döküm
+      select_month: Ay seçin
+      donut_empty: Seçilen ay için veri yok
+      donut_total: Toplam
+      comparison_title: Önceki Dönemle Karşılaştırma
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Değişim
+      comparison_table:
+        category: Kategori
+        change: Değişim
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} - %{end}"
+      last_12_months: "%{start} - %{end}"
+      year_to_date: "%{year} Yılbaşından bugüne"
+      custom: "%{start} - %{end}"

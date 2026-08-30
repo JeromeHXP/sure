@@ -10,6 +10,7 @@ vi:
         home: Trang chủ
         reports: Báo cáo
         transactions: Giao dịch
+        category_analysis: Phân tích
     auth:
       existing_account: Đã có tài khoản?
       no_account: Mới dùng %{product_name}?

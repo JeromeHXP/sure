@@ -11,6 +11,7 @@ de:
         plan: Plan
         reports: Berichte
         transactions: Transaktionen
+        category_analysis: Analyse
         goals: Ziele
       insights: Insights
       resize_left_sidebar: Breite der Kontenleiste ändern

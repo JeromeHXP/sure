@@ -10,6 +10,7 @@ nb:
         home: Hjem
         reports: Rapporter
         transactions: Transaksjoner
+        category_analysis: Analyse
     auth:
       existing_account: Har du allerede en konto?
       no_account: Ny hos %{product_name}?

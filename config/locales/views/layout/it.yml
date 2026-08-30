@@ -15,6 +15,7 @@ it:
         reports: Rapporti
         goals: Obiettivi
         transactions: Transazioni
+        category_analysis: Analisi
     auth:
       existing_account: Hai già un account?
       no_account: Nuovo su %{product_name}?

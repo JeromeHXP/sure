@@ -1,0 +1,57 @@
+---
+es:
+  category_analyses:
+    index:
+      title: Análisis de evolución por categorías
+      subtitle: Sigue cómo evolucionan tus gastos e ingresos por categoría a lo largo del tiempo
+      period_aria: Seleccionar período de análisis
+      periods:
+        last_6_months: Últimos 6 meses
+        last_12_months: Últimos 12 meses
+        year_to_date: Año hasta hoy
+        custom: Rango personalizado
+      date_range:
+        from: Desde
+        to: Hasta
+      previous_period: Período anterior
+      next_period: Período siguiente
+      today: Hoy
+      select_categories: Seleccionar categorías
+      select_all: Seleccionar todo
+      unselect_all: Deseleccionar todo
+      select_accounts: Seleccionar cuentas
+      filter_accounts_all: Todas las cuentas
+      filter_accounts:
+        one: "%{count} cuenta"
+        other: "%{count} cuentas"
+      search_accounts: Filtrar cuentas…
+      categories:
+        one: "%{count} categoría"
+        other: "%{count} categorías"
+      search_placeholder: Filtrar categorías…
+      chart_title: Evolución mensual
+      table_title: Desglose mensual
+      table:
+        month: Mes
+        total: Total
+      current_month: Actual
+      no_data: No hay datos disponibles para el período y las categorías seleccionados
+      empty_state:
+        title: Sin categorías con transacciones
+        message: Crea transacciones y asígnales categorías para ver el análisis de evolución
+      donut_title: Desglose por categoría
+      select_month: Seleccionar mes
+      donut_empty: Sin datos para el mes seleccionado
+      donut_total: Total
+      comparison_title: Comparación con el período anterior
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Cambio
+      comparison_table:
+        category: Categoría
+        change: Cambio
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} a %{end}"
+      last_12_months: "%{start} a %{end}"
+      year_to_date: "%{year} Año hasta hoy"
+      custom: "%{start} a %{end}"

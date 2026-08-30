@@ -1,0 +1,57 @@
+---
+pl:
+  category_analyses:
+    index:
+      title: Analiza ewolucji według kategorii
+      subtitle: Śledź, jak zmieniają się wydatki i przychody w poszczególnych kategoriach w czasie
+      period_aria: Wybierz okres analizy
+      periods:
+        last_6_months: Ostatnie 6 miesięcy
+        last_12_months: Ostatnie 12 miesięcy
+        year_to_date: Od początku roku
+        custom: Niestandardowy zakres
+      date_range:
+        from: Od
+        to: Do
+      previous_period: Poprzedni okres
+      next_period: Następny okres
+      today: Dzisiaj
+      select_categories: Wybierz kategorie
+      select_all: Zaznacz wszystkie
+      unselect_all: Odznacz wszystkie
+      select_accounts: Wybierz konta
+      filter_accounts_all: Wszystkie konta
+      filter_accounts:
+        one: "%{count} konto"
+        other: "%{count} kont"
+      search_accounts: Filtruj konta…
+      categories:
+        one: "%{count} kategoria"
+        other: "%{count} kategorii"
+      search_placeholder: Filtruj kategorie…
+      chart_title: Ewolucja miesięczna
+      table_title: Podział miesięczny
+      table:
+        month: Miesiąc
+        total: Razem
+      current_month: Bieżący
+      no_data: Brak danych dla wybranego okresu i kategorii
+      empty_state:
+        title: Brak kategorii z transakcjami
+        message: Utwórz transakcje i przypisz je do kategorii, aby zobaczyć analizę ewolucji
+      donut_title: Podział według kategorii
+      select_month: Wybierz miesiąc
+      donut_empty: Brak danych dla wybranego miesiąca
+      donut_total: Razem
+      comparison_title: Porównanie z poprzednim okresem
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Zmiana
+      comparison_table:
+        category: Kategoria
+        change: Zmiana
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} — %{end}"
+      last_12_months: "%{start} — %{end}"
+      year_to_date: "%{year} Od początku roku"
+      custom: "%{start} — %{end}"

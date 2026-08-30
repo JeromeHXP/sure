@@ -13,6 +13,7 @@ es:
         reports: Informes
         goals: Objetivos
         transactions: Transacciones
+        category_analysis: Análisis
     auth:
       existing_account: ¿Ya tienes una cuenta?
       no_account: ¿Nuevo en %{product_name}?

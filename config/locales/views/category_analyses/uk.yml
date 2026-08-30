@@ -1,0 +1,57 @@
+---
+uk:
+  category_analyses:
+    index:
+      title: Аналіз динаміки за категоріями
+      subtitle: Відстежуйте, як змінюються витрати та доходи за категоріями з часом
+      period_aria: Оберіть період аналізу
+      periods:
+        last_6_months: Останні 6 місяців
+        last_12_months: Останні 12 місяців
+        year_to_date: З початку року
+        custom: Довільний діапазон
+      date_range:
+        from: З
+        to: По
+      previous_period: Попередній період
+      next_period: Наступний період
+      today: Сьогодні
+      select_categories: Обрати категорії
+      select_all: Обрати всі
+      unselect_all: Зняти виділення
+      select_accounts: Обрати рахунки
+      filter_accounts_all: Усі рахунки
+      filter_accounts:
+        one: "%{count} рахунок"
+        other: "%{count} рахунків"
+      search_accounts: Фільтр рахунків…
+      categories:
+        one: "%{count} категорія"
+        other: "%{count} категорій"
+      search_placeholder: Фільтр категорій…
+      chart_title: Місячна динаміка
+      table_title: Місячна деталізація
+      table:
+        month: Місяць
+        total: Разом
+      current_month: Поточний
+      no_data: Немає даних за обраний період та категорії
+      empty_state:
+        title: Немає категорій з транзакціями
+        message: Створіть транзакції та призначте їм категорії, щоб побачити аналіз динаміки
+      donut_title: Розподіл за категоріями
+      select_month: Обрати місяць
+      donut_empty: Немає даних за обраний місяць
+      donut_total: Разом
+      comparison_title: Порівняння з попереднім періодом
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Зміна
+      comparison_table:
+        category: Категорія
+        change: Зміна
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} — %{end}"
+      last_12_months: "%{start} — %{end}"
+      year_to_date: "%{year} З початку року"
+      custom: "%{start} — %{end}"

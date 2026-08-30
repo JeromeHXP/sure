@@ -1,0 +1,57 @@
+---
+vi:
+  category_analyses:
+    index:
+      title: Phân tích diễn biến theo danh mục
+      subtitle: Theo dõi chi tiêu và thu nhập của bạn thay đổi theo danh mục như thế nào qua thời gian
+      period_aria: Chọn kỳ phân tích
+      periods:
+        last_6_months: 6 tháng gần đây
+        last_12_months: 12 tháng gần đây
+        year_to_date: Từ đầu năm
+        custom: Khoảng tùy chỉnh
+      date_range:
+        from: Từ
+        to: Đến
+      previous_period: Kỳ trước
+      next_period: Kỳ tiếp theo
+      today: Hôm nay
+      select_categories: Chọn danh mục
+      select_all: Chọn tất cả
+      unselect_all: Bỏ chọn tất cả
+      select_accounts: Chọn tài khoản
+      filter_accounts_all: Tất cả tài khoản
+      filter_accounts:
+        one: "%{count} tài khoản"
+        other: "%{count} tài khoản"
+      search_accounts: Lọc tài khoản…
+      categories:
+        one: "%{count} danh mục"
+        other: "%{count} danh mục"
+      search_placeholder: Lọc danh mục…
+      chart_title: Diễn biến hàng tháng
+      table_title: Chi tiết hàng tháng
+      table:
+        month: Tháng
+        total: Tổng
+      current_month: Hiện tại
+      no_data: Không có dữ liệu cho kỳ và danh mục đã chọn
+      empty_state:
+        title: Không có danh mục nào có giao dịch
+        message: Tạo giao dịch và gán danh mục để xem phân tích diễn biến
+      donut_title: Phân bổ theo danh mục
+      select_month: Chọn tháng
+      donut_empty: Không có dữ liệu cho tháng đã chọn
+      donut_total: Tổng
+      comparison_title: So sánh với kỳ trước
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Thay đổi
+      comparison_table:
+        category: Danh mục
+        change: Thay đổi
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} đến %{end}"
+      last_12_months: "%{start} đến %{end}"
+      year_to_date: "%{year} Từ đầu năm"
+      custom: "%{start} đến %{end}"

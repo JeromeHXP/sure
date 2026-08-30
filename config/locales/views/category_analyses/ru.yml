@@ -1,0 +1,57 @@
+---
+ru:
+  category_analyses:
+    index:
+      title: Анализ динамики по категориям
+      subtitle: Отслеживайте, как меняются расходы и доходы по категориям с течением времени
+      period_aria: Выберите период анализа
+      periods:
+        last_6_months: Последние 6 месяцев
+        last_12_months: Последние 12 месяцев
+        year_to_date: С начала года
+        custom: Произвольный диапазон
+      date_range:
+        from: С
+        to: По
+      previous_period: Предыдущий период
+      next_period: Следующий период
+      today: Сегодня
+      select_categories: Выбрать категории
+      select_all: Выбрать все
+      unselect_all: Снять выделение
+      select_accounts: Выбрать счета
+      filter_accounts_all: Все счета
+      filter_accounts:
+        one: "%{count} счёт"
+        other: "%{count} счетов"
+      search_accounts: Фильтр счетов…
+      categories:
+        one: "%{count} категория"
+        other: "%{count} категорий"
+      search_placeholder: Фильтр категорий…
+      chart_title: Месячная динамика
+      table_title: Месячная детализация
+      table:
+        month: Месяц
+        total: Итого
+      current_month: Текущий
+      no_data: Нет данных за выбранный период и категории
+      empty_state:
+        title: Нет категорий с транзакциями
+        message: Создайте транзакции и назначьте им категории, чтобы увидеть анализ динамики
+      donut_title: Разбивка по категориям
+      select_month: Выбрать месяц
+      donut_empty: Нет данных за выбранный месяц
+      donut_total: Итого
+      comparison_title: Сравнение с предыдущим периодом
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Изменение
+      comparison_table:
+        category: Категория
+        change: Изменение
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} — %{end}"
+      last_12_months: "%{start} — %{end}"
+      year_to_date: "%{year} С начала года"
+      custom: "%{start} — %{end}"

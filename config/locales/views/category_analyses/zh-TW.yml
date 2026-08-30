@@ -1,0 +1,55 @@
+---
+zh-TW:
+  category_analyses:
+    index:
+      title: 分類演變分析
+      subtitle: 追蹤您的支出和收入如何隨時間在各分類間演變
+      period_aria: 選擇分析週期
+      periods:
+        last_6_months: 近 6 個月
+        last_12_months: 近 12 個月
+        year_to_date: 年初至今
+        custom: 自訂範圍
+      date_range:
+        from: 從
+        to: 到
+      previous_period: 上一週期
+      next_period: 下一週期
+      today: 今天
+      select_categories: 選擇分類
+      select_all: 全選
+      unselect_all: 取消全選
+      select_accounts: 選擇帳戶
+      filter_accounts_all: 所有帳戶
+      filter_accounts:
+        other: "%{count} 個帳戶"
+      search_accounts: 篩選帳戶…
+      categories:
+        other: "%{count} 個分類"
+      search_placeholder: 篩選分類…
+      chart_title: 月度演變
+      table_title: 月度明細
+      table:
+        month: 月份
+        total: 合計
+      current_month: 目前
+      no_data: 所選週期和分類暫無資料
+      empty_state:
+        title: 沒有含交易的分類
+        message: 建立交易並指定分類即可查看演變分析
+      donut_title: 按分類明細
+      select_month: 選擇月份
+      donut_empty: 所選月份無資料
+      donut_total: 合計
+      comparison_title: 與上一週期比較
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: 變化
+      comparison_table:
+        category: 分類
+        change: 變化
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} 至 %{end}"
+      last_12_months: "%{start} 至 %{end}"
+      year_to_date: "%{year} 年初至今"
+      custom: "%{start} 至 %{end}"

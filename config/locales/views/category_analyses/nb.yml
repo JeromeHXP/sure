@@ -1,0 +1,57 @@
+---
+nb:
+  category_analyses:
+    index:
+      title: Analyse av kategoriutvikling
+      subtitle: Følg med på hvordan utgifter og inntekter utvikler seg på tvers av kategorier over tid
+      period_aria: Velg analyseperiode
+      periods:
+        last_6_months: Siste 6 måneder
+        last_12_months: Siste 12 måneder
+        year_to_date: Året så langt
+        custom: Tilpasset periode
+      date_range:
+        from: Fra
+        to: Til
+      previous_period: Forrige periode
+      next_period: Neste periode
+      today: I dag
+      select_categories: Velg kategorier
+      select_all: Velg alle
+      unselect_all: Fjern alle
+      select_accounts: Velg kontoer
+      filter_accounts_all: Alle kontoer
+      filter_accounts:
+        one: "%{count} konto"
+        other: "%{count} kontoer"
+      search_accounts: Filtrer kontoer…
+      categories:
+        one: "%{count} kategori"
+        other: "%{count} kategorier"
+      search_placeholder: Filtrer kategorier…
+      chart_title: Månedlig utvikling
+      table_title: Månedlig oversikt
+      table:
+        month: Måned
+        total: Totalt
+      current_month: Nåværende
+      no_data: Ingen data tilgjengelig for valgt periode og kategorier
+      empty_state:
+        title: Ingen kategorier med transaksjoner
+        message: Opprett transaksjoner og tilordne dem kategorier for å se utviklingsanalysen
+      donut_title: Fordeling etter kategori
+      select_month: Velg måned
+      donut_empty: Ingen data for valgt måned
+      donut_total: Totalt
+      comparison_title: Sammenligning med forrige periode
+      comparison_subtitle: "%{previous} vs. %{current}"
+      comparison_change: Endring
+      comparison_table:
+        category: Kategori
+        change: Endring
+        percent: "%"
+    period_labels:
+      last_6_months: "%{start} til %{end}"
+      last_12_months: "%{start} til %{end}"
+      year_to_date: "%{year} Året så langt"
+      custom: "%{start} til %{end}"
