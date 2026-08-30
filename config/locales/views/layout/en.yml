@@ -15,6 +15,7 @@ en:
         reports: Reports
         goals: Goals
         transactions: Transactions
+        category_analysis: Analysis
     auth:
       existing_account: Already have an account?
       no_account: New to %{product_name}?

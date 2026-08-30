@@ -406,6 +406,8 @@ Rails.application.routes.draw do
     get :picker, on: :collection
   end
 
+  resources :category_analyses, only: %i[index]
+
   # Hub page fronting budgets + goals under a single "Plan" nav entry.
   resource :plan, only: :show
 

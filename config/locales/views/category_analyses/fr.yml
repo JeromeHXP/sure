@@ -1,0 +1,46 @@
+---
+fr:
+  category_analyses:
+    index:
+      title: Analyse de l'évolution par catégories
+      subtitle: Suivez l'évolution de vos dépenses et revenus par catégorie dans le temps
+      period_aria: Sélectionner la période d'analyse
+      periods:
+        last_6_months: 6 derniers mois
+        last_12_months: 12 derniers mois
+        year_to_date: Depuis le début de l'année
+        custom: Période personnalisée
+      date_range:
+        from: Du
+        to: Au
+      previous_period: Période précédente
+      next_period: Période suivante
+      today: Aujourd'hui
+      select_categories: Sélectionner les catégories
+      select_all: Tout sélectionner
+      unselect_all: Tout désélectionner
+      select_accounts: Sélectionner les comptes
+      filter_accounts_all: Tous les comptes
+      filter_accounts:
+        one: "%{count} compte"
+        other: "%{count} comptes"
+      search_accounts: Filtrer les comptes…
+      categories:
+        one: "%{count} catégorie"
+        other: "%{count} catégories"
+      search_placeholder: Filtrer les catégories…
+      chart_title: Évolution mensuelle
+      table_title: Détail mensuel
+      table:
+        month: Mois
+        total: Total
+      current_month: Actuel
+      no_data: Aucune donnée disponible pour la période et les catégories sélectionnées
+      empty_state:
+        title: Aucune catégorie avec des transactions
+        message: Créez des transactions et attribuez-les à des catégories pour voir l'analyse d'évolution
+    period_labels:
+      last_6_months: "Du %{start} au %{end}"
+      last_12_months: "Du %{start} au %{end}"
+      year_to_date: "Année %{year} à ce jour"
+      custom: "Du %{start} au %{end}"

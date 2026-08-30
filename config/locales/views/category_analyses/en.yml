@@ -1,0 +1,46 @@
+---
+en:
+  category_analyses:
+    index:
+      title: Category Evolution Analysis
+      subtitle: Track how your expenses and income evolve across categories over time
+      period_aria: Select analysis period
+      periods:
+        last_6_months: Last 6 Months
+        last_12_months: Last 12 Months
+        year_to_date: Year to Date
+        custom: Custom Range
+      date_range:
+        from: From
+        to: To
+      previous_period: Previous period
+      next_period: Next period
+      today: Today
+      select_categories: Select Categories
+      select_all: Select All
+      unselect_all: Unselect All
+      select_accounts: Select Accounts
+      filter_accounts_all: All Accounts
+      filter_accounts:
+        one: "%{count} account"
+        other: "%{count} accounts"
+      search_accounts: Filter accounts…
+      categories:
+        one: "%{count} category"
+        other: "%{count} categories"
+      search_placeholder: Filter categories…
+      chart_title: Monthly Evolution
+      table_title: Monthly Breakdown
+      table:
+        month: Month
+        total: Total
+      current_month: Current
+      no_data: No data available for the selected period and categories
+      empty_state:
+        title: No categories with transactions
+        message: Create some transactions and assign them to categories to see the evolution analysis
+    period_labels:
+      last_6_months: "%{start} to %{end}"
+      last_12_months: "%{start} to %{end}"
+      year_to_date: "%{year} Year to Date"
+      custom: "%{start} to %{end}"
