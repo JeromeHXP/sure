@@ -32,7 +32,7 @@ tr:
       no_matching_categories: Eşleşen kategori yok
       expand_all: Tümünü genişlet
       collapse_all: Tümünü daralt
-      toggle_category_group: "%{name}" grubunu değiştir
+      toggle_category_group: '"%{name}" grubunu değiştir'
       select_all_in_group: Bu gruptaki tümünü seç
       none_in_group: Bu grupta hiçbiri
       all: Tümü
