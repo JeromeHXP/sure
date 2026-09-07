@@ -13,6 +13,7 @@ export default class extends Controller {
   static values = {
     data: { type: Array, default: [] },
     currency: { type: String, default: "USD" },
+    transactionsPath: { type: String, default: "" },
   };
 
   _resizeObserver = null;
@@ -192,6 +193,7 @@ export default class extends Controller {
       .attr("height", (d) => Math.max(0, yScale(d[0]) - yScale(d[1])))
       .attr("rx", 2)
       .attr("ry", 2)
+      .style("cursor", "pointer")
       .on("mousemove", function (event, d) {
         const layerGroup = this.parentNode;
         const monthIndex = Array.from(layerGroup.children).indexOf(this);
@@ -203,7 +205,17 @@ export default class extends Controller {
         }));
         showTooltip(event, monthLabel, rows);
       })
-      .on("mouseout", hideTooltip);
+      .on("mouseout", hideTooltip)
+      .on("click", (event, d) => {
+        // d is a stacked series element; the layer's key is the category name.
+        // Find the month index from the bound data position.
+        const layer = event.target.parentNode;
+        const monthIndex = Array.from(layer.children).indexOf(event.target);
+        const monthData = data[monthIndex];
+        if (!monthData) return;
+        const categoryName = d3.select(layer).datum().key;
+        this._navigateToTransactions(categoryName, monthData.month);
+      });
 
     // X axis
     group
@@ -245,8 +257,16 @@ export default class extends Controller {
         .join("div")
         .attr(
           "class",
-          "flex items-center gap-1.5 text-xs text-secondary whitespace-nowrap"
-        );
+          "flex items-center gap-1.5 text-xs text-secondary whitespace-nowrap cursor-pointer hover:text-primary"
+        )
+        .on("click", (event, categoryName) => {
+          // Navigate to transactions for this category across the full period
+          const firstMonth = data[0]?.month;
+          const lastMonth = data[data.length - 1]?.month;
+          if (firstMonth && lastMonth) {
+            this._navigateToTransactions(categoryName, firstMonth, lastMonth);
+          }
+        });
 
       item
         .append("span")
@@ -255,6 +275,43 @@ export default class extends Controller {
 
       item.append("span").text((c) => c);
     }
+  }
+
+  _navigateToTransactions(categoryName, month, endMonth) {
+    if (!this.transactionsPathValue) return;
+
+    // `month` and `endMonth` are ISO date strings (YYYY-MM-DD) from the
+    // serialized @monthly_data. Work with strings directly to avoid
+    // timezone shifts from Date parsing.
+    const startStr = month.slice(0, 10);
+    let endStr;
+
+    // Compute last day of the month in local time, formatted as YYYY-MM-DD.
+    // Using toISOString() would convert back to UTC and shift the date
+    // backwards in positive-UTC timezones (e.g. NZ Mar 31 -> Mar 30).
+    const lastDayOfMonth = (dateStr) => {
+      const [y, m] = dateStr.split("-").map(Number);
+      return new Date(y, m, 0).getDate(); // day 0 of next month = last day
+    };
+
+    const formatDate = (y, m, d) =>
+      `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+
+    if (endMonth) {
+      const [y, m] = endMonth.slice(0, 10).split("-").map(Number);
+      endStr = formatDate(y, m, lastDayOfMonth(endMonth.slice(0, 10)));
+    } else {
+      const [y, m] = startStr.split("-").map(Number);
+      endStr = formatDate(y, m, lastDayOfMonth(startStr));
+    }
+
+    const url = this.transactionsPathValue
+      .replace("__START_DATE__", startStr)
+      .replace("__END_DATE__", endStr);
+
+    // Append category filter
+    const separator = url.includes("?") ? "&" : "?";
+    window.location.href = `${url}${separator}q[categories][]=${encodeURIComponent(categoryName)}`;
   }
 
   _formatCurrency(value) {

@@ -29,6 +29,15 @@ vi:
         one: "%{count} danh mục"
         other: "%{count} danh mục"
       search_placeholder: Lọc danh mục…
+      no_matching_categories: Không có danh mục phù hợp
+      expand_all: Mở rộng tất cả
+      collapse_all: Thu gọn tất cả
+      toggle_category_group: Chuyển đổi nhóm "%{name}"
+      select_all_in_group: Chọn tất cả trong nhóm này
+      none_in_group: Không có trong nhóm này
+      all: Tất cả
+      none: Không
+      apply: Áp dụng
       chart_title: Diễn biến hàng tháng
       table_title: Chi tiết hàng tháng
       table:

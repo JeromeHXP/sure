@@ -29,6 +29,15 @@ ro:
         one: "%{count} categorie"
         other: "%{count} de categorii"
       search_placeholder: Filtrează categorii…
+      no_matching_categories: Nicio categorie potrivită
+      expand_all: Extinde toate
+      collapse_all: Restrânge toate
+      toggle_category_group: Comută grupul "%{name}"
+      select_all_in_group: Selectează tot în acest grup
+      none_in_group: Niciunul în acest grup
+      all: Toate
+      none: Niciunul
+      apply: Aplică
       chart_title: Evoluție lunară
       table_title: Defalcare lunară
       table:

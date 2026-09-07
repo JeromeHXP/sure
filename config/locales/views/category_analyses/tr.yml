@@ -29,6 +29,15 @@ tr:
         one: "%{count} kategori"
         other: "%{count} kategori"
       search_placeholder: Kategorileri filtrele…
+      no_matching_categories: Eşleşen kategori yok
+      expand_all: Tümünü genişlet
+      collapse_all: Tümünü daralt
+      toggle_category_group: "%{name}" grubunu değiştir
+      select_all_in_group: Bu gruptaki tümünü seç
+      none_in_group: Bu grupta hiçbiri
+      all: Tümü
+      none: Hiçbiri
+      apply: Uygula
       chart_title: Aylık Gelişim
       table_title: Aylık Döküm
       table:

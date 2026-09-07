@@ -29,6 +29,15 @@ ca:
         one: "%{count} categoria"
         other: "%{count} categories"
       search_placeholder: Filtra categories…
+      no_matching_categories: No hi ha categories coincidents
+      expand_all: Expandeix-ho tot
+      collapse_all: Contrau-ho tot
+      toggle_category_group: Commuta el grup "%{name}"
+      select_all_in_group: Selecciona-ho tot en aquest grup
+      none_in_group: Cap en aquest grup
+      all: Tots
+      none: Cap
+      apply: Aplica
       chart_title: Evolució mensual
       table_title: Desglossament mensual
       table:

@@ -1,0 +1,189 @@
+<%# Enhanced category selector with tree view, selection counts, and group actions %>
+<%# Form submission is deferred until the popover closes (or Apply is clicked) %>
+<% form_id = "category_analyses_filter_form" %>
+<div class="p-2 space-y-3" data-controller="enhanced-category-selector list-filter">
+  <%# Header with actions %>
+  <div class="flex items-center justify-between gap-2 px-1">
+    <div class="flex items-center gap-2 flex-wrap">
+      <button type="button"
+              class="text-xs font-medium text-secondary hover:text-primary px-2 py-1 rounded-md hover:bg-container-inset-hover"
+              data-action="click->enhanced-category-selector#selectAll">
+        <%= t("category_analyses.index.select_all") %>
+      </button>
+      <span class="text-subdued">·</span>
+      <button type="button"
+              class="text-xs font-medium text-secondary hover:text-primary px-2 py-1 rounded-md hover:bg-container-inset-hover"
+              data-action="click->enhanced-category-selector#resetAll">
+        <%= t("category_analyses.index.unselect_all") %>
+      </button>
+    </div>
+
+    <div class="flex items-center gap-1">
+      <button type="button"
+              class="text-xs font-medium text-secondary hover:text-primary px-2 py-1 rounded-md hover:bg-container-inset-hover flex items-center gap-1"
+              data-action="click->enhanced-category-selector#toggleAllGroups"
+              data-enhanced-category-selector-action-type-value="expand"
+              title="<%= t('category_analyses.index.expand_all') %>">
+        <%= icon("folder-open", size: "xs") %>
+        <span><%= t("category_analyses.index.expand_all") %></span>
+      </button>
+      <button type="button"
+              class="text-xs font-medium text-secondary hover:text-primary px-2 py-1 rounded-md hover:bg-container-inset-hover flex items-center gap-1"
+              data-action="click->enhanced-category-selector#toggleAllGroups"
+              data-enhanced-category-selector-action-type-value="collapse"
+              title="<%= t('category_analyses.index.collapse_all') %>">
+        <%= icon("folder-closed", size: "xs") %>
+        <span><%= t("category_analyses.index.collapse_all") %></span>
+      </button>
+    </div>
+  </div>
+
+  <%# Search input %>
+  <%= render DS::SearchInput.new(
+        variant: :embedded,
+        placeholder: t("category_analyses.index.search_placeholder"),
+        aria_label: t("category_analyses.index.search_placeholder"),
+        data: {
+          list_filter_target: "input",
+          action: "input->list-filter#filter"
+        }
+      ) %>
+
+  <%# Category tree %>
+  <div class="max-h-72 overflow-auto" data-list-filter-target="list">
+    <% @category_options.each do |group| %>
+      <%
+        gid = group[:id].to_s
+        has_subcategories = group[:subcategories]&.any?
+        all_in_group_selected = [gid] + (group[:subcategories] || []).map { |s| s[:id].to_s }
+        selected_in_group = all_in_group_selected.select { |id| @selected_category_ids.include?(id) }
+        group_selected_count = selected_in_group.size
+        group_total_count = all_in_group_selected.size
+      %>
+
+      <%# Parent category row %>
+      <div class="filterable-item" data-filter-name="<%= group[:name] %>">
+        <div class="flex items-center gap-2 py-1.5 px-1 group"
+             data-enhanced-category-selector-target="groupContainer"
+             data-enhanced-category-selector-group-id-value="<%= gid %>">
+
+          <%# Expand/collapse toggle for groups with subcategories %>
+          <% if has_subcategories %>
+            <button type="button"
+                    class="p-1 rounded-md hover:bg-container-inset-hover transition-colors"
+                    data-enhanced-category-selector-target="groupToggle"
+                    data-action="click->enhanced-category-selector#toggleGroup"
+                    data-enhanced-category-selector-group-id-value="<%= gid %>"
+                    aria-expanded="true"
+                    aria-label="<%= t('category_analyses.index.toggle_category_group', name: group[:name]) %>">
+              <%= icon("chevron-right", size: "sm", class: "transition-transform duration-200 rotate-90") %>
+            </button>
+          <% else %>
+            <span class="w-6"></span>
+          <% end %>
+
+          <%# Checkbox for parent category %>
+          <%= check_box_tag "category_ids[]",
+                            gid,
+                            @selected_category_ids.include?(gid),
+                            id: "category_#{gid}",
+                            class: "checkbox checkbox--light",
+                            form: form_id,
+                            data: {
+                              enhanced_category_selector_target: "checkbox",
+                              action: "change->enhanced-category-selector#handleCheckboxChange"
+                            } %>
+
+          <%# Category label with icon and selection count %>
+          <label for="category_<%= gid %>" class="flex items-center gap-1.5 cursor-pointer text-sm text-primary flex-1">
+            <% if group[:icon] %>
+              <%= icon(group[:icon], size: "sm", color: "current") %>
+            <% end %>
+            <span class="truncate"><%= group[:name] %></span>
+            <% if has_subcategories %>
+              <span class="text-xs text-subdued ml-1"
+                    data-enhanced-category-selector-target="selectionCount"
+                    data-enhanced-category-selector-group-id-value="<%= gid %>">
+                <% if group_selected_count > 0 %>
+                  (<%= group_selected_count %>/<%= group_total_count %>)
+                <% end %>
+              </span>
+            <% end %>
+          </label>
+
+          <%# Group actions (select all in group) %>
+          <% if has_subcategories %>
+            <div class="flex items-center gap-1 ml-2">
+              <button type="button"
+                      class="text-xs text-secondary hover:text-primary px-1 rounded hover:bg-container-inset-hover"
+                      data-action="click->enhanced-category-selector#selectGroup"
+                      data-enhanced-category-selector-group-id-value="<%= gid %>"
+                      data-enhanced-category-selector-action-type-value="select"
+                      title="<%= t('category_analyses.index.select_all_in_group') %>">
+                <%= t("category_analyses.index.all") %>
+              </button>
+              <button type="button"
+                      class="text-xs text-secondary hover:text-primary px-1 rounded hover:bg-container-inset-hover"
+                      data-action="click->enhanced-category-selector#selectGroup"
+                      data-enhanced-category-selector-group-id-value="<%= gid %>"
+                      data-enhanced-category-selector-action-type-value="deselect"
+                      title="<%= t('category_analyses.index.none_in_group') %>">
+                <%= t("category_analyses.index.none") %>
+              </button>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Subcategories - collapsible content %>
+        <% if has_subcategories %>
+          <div class="pl-6 border-l border-tertiary ml-2"
+               data-enhanced-category-selector-target="groupContent"
+               data-enhanced-category-selector-group-id-value="<%= gid %>">
+            <% group[:subcategories]&.each do |sub| %>
+              <%
+                sid = sub[:id].to_s
+                sub_selected = @selected_category_ids.include?(sid)
+              %>
+
+              <div class="filterable-item flex items-center gap-2 py-1.5 px-2" data-filter-name="<%= sub[:name] %>">
+                <%# Checkbox for subcategory %>
+                <%= check_box_tag "category_ids[]",
+                                  sid,
+                                  sub_selected,
+                                  id: "category_#{sid}",
+                                  class: "checkbox checkbox--light",
+                                  form: form_id,
+                                  data: {
+                                    enhanced_category_selector_target: "checkbox",
+                                    parent_id: gid,
+                                    action: "change->enhanced-category-selector#handleCheckboxChange"
+                                  } %>
+
+                <%# Subcategory label with icon %>
+                <label for="category_<%= sid %>" class="flex items-center gap-1.5 cursor-pointer text-sm text-secondary flex-1">
+                  <span class="text-subdued"><%= icon("corner-down-right", size: "xs") %></span>
+                  <% if sub[:icon] %>
+                    <%= icon(sub[:icon], size: "sm", color: "current") %>
+                  <% end %>
+                  <span class="truncate"><%= sub[:name] %></span>
+                </label>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# Empty state when no categories match search %>
+    <div class="hidden text-center py-4 text-sm text-subdued" data-list-filter-target="emptyMessage">
+      <%= t("category_analyses.index.no_matching_categories") %>
+    </div>
+  </div>
+
+  <%# Apply button - submits the form without waiting for popover close %>
+  <button type="button"
+          class="w-full px-3 py-2 text-sm font-medium text-primary bg-container-inset rounded-lg hover:bg-container-inset-hover"
+          data-action="click->enhanced-category-selector#apply">
+    <%= t("category_analyses.index.apply") %>
+  </button>
+</div>

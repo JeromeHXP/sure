@@ -29,6 +29,15 @@ es:
         one: "%{count} categoría"
         other: "%{count} categorías"
       search_placeholder: Filtrar categorías…
+      no_matching_categories: No hay categorías coincidentes
+      expand_all: Expandir todo
+      collapse_all: Contraer todo
+      toggle_category_group: Alternar grupo "%{name}"
+      select_all_in_group: Seleccionar todo en este grupo
+      none_in_group: Ninguno en este grupo
+      all: Todos
+      none: Ninguno
+      apply: Aplicar
       chart_title: Evolución mensual
       table_title: Desglose mensual
       table:

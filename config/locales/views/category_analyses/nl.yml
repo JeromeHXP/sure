@@ -29,6 +29,15 @@ nl:
         one: "%{count} categorie"
         other: "%{count} categorieën"
       search_placeholder: Categorieën filteren…
+      no_matching_categories: Geen overeenkomende categorieën
+      expand_all: Alles uitklappen
+      collapse_all: Alles inklappen
+      toggle_category_group: Groep "%{name}" wisselen
+      select_all_in_group: Alles selecteren in deze groep
+      none_in_group: Geen in deze groep
+      all: Alles
+      none: Geen
+      apply: Toepassen
       chart_title: Maandelijkse ontwikkeling
       table_title: Maandelijks overzicht
       table:

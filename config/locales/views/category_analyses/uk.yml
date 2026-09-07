@@ -29,6 +29,15 @@ uk:
         one: "%{count} категорія"
         other: "%{count} категорій"
       search_placeholder: Фільтр категорій…
+      no_matching_categories: Немає відповідних категорій
+      expand_all: Розгорнути все
+      collapse_all: Згорнути все
+      toggle_category_group: Перемкнути групу "%{name}"
+      select_all_in_group: Обрати всі в цій групі
+      none_in_group: Жодного в цій групі
+      all: Усі
+      none: Жодного
+      apply: Застосувати
       chart_title: Місячна динаміка
       table_title: Місячна деталізація
       table:

@@ -27,6 +27,15 @@ zh-TW:
       categories:
         other: "%{count} 個分類"
       search_placeholder: 篩選分類…
+      no_matching_categories: 沒有符合的分類
+      expand_all: 全部展開
+      collapse_all: 全部摺疊
+      toggle_category_group: 切換"%{name}"群組
+      select_all_in_group: 選擇此群組全部
+      none_in_group: 此群組全不選
+      all: 全部
+      none: 無
+      apply: 套用
       chart_title: 月度演變
       table_title: 月度明細
       table:

@@ -29,6 +29,15 @@ ru:
         one: "%{count} категория"
         other: "%{count} категорий"
       search_placeholder: Фильтр категорий…
+      no_matching_categories: Нет совпадающих категорий
+      expand_all: Развернуть все
+      collapse_all: Свернуть все
+      toggle_category_group: Переключить группу "%{name}"
+      select_all_in_group: Выбрать все в этой группе
+      none_in_group: Ни одного в этой группе
+      all: Все
+      none: Ни одного
+      apply: Применить
       chart_title: Месячная динамика
       table_title: Месячная детализация
       table:

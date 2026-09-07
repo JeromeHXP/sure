@@ -29,6 +29,15 @@ fr:
         one: "%{count} catégorie"
         other: "%{count} catégories"
       search_placeholder: Filtrer les catégories…
+      no_matching_categories: Aucune catégorie correspondante
+      expand_all: Tout déplier
+      collapse_all: Tout replier
+      toggle_category_group: Basculer le groupe "%{name}"
+      select_all_in_group: Tout sélectionner dans ce groupe
+      none_in_group: Aucun dans ce groupe
+      all: Tous
+      none: Aucun
+      apply: Appliquer
       chart_title: Évolution mensuelle
       table_title: Détail mensuel
       table:

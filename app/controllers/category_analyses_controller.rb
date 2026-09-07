@@ -39,52 +39,28 @@ class CategoryAnalysesController < ApplicationController
       @selected_category_ids = Array(raw).map(&:to_s).reject(&:blank?)
     end
 
-    # If no categories selected, default to ALL categories (stacked per month)
-    @selected_category_ids = @all_categories.pluck(:id).map(&:to_s) if @selected_category_ids.empty? && raw != "none"
-
-    # Get selected categories, preserving the alphabetical-by-hierarchy order
-    # so the chart legend and table columns are stable. Compare as strings
-    # because params arrive as strings but `pluck(:id)` returns UUID objects.
-    #
-    # Rollup: selecting a parent category automatically includes all its
-    # subcategories (matching the IncomeStatement behavior where a parent's
-    # total counts its children). We expand the selected set to include
-    # children, then display only roots (plus orphan children whose parent
-    # is not selected) with each parent's value summed over its children.
-    parent_to_children = @all_categories.group_by(&:parent_id)
-
-    expanded = @selected_category_ids.map(&:to_s).to_set
-    @all_categories.each do |cat|
-      next unless cat.parent_id.nil?
-      if expanded.include?(cat.id.to_s)
-        (parent_to_children[cat.id] || []).each { |child| expanded << child.id.to_s }
-      end
+    # If no categories selected, default to ALL categories only on initial
+    # page load (when the filter form hasn't been submitted). When the form
+    # was explicitly submitted with no selection, respect the empty set so
+    # "Unselect All" actually clears the selection.
+    if @selected_category_ids.empty? && raw != "none" && params[:filter_form_submitted] != "true"
+      @selected_category_ids = @all_categories.pluck(:id).map(&:to_s)
     end
-    @selected_category_ids = expanded.to_a
 
-    selected_set = expanded
+    # For independent selection: each selected category is treated separately
+    # Parents and children can be selected independently, and each appears as its own
+    # category in the analysis with its own data
+    selected_set = @selected_category_ids.map(&:to_s).to_set
     @selected_categories = @all_categories.select { |c| selected_set.include?(c.id.to_s) }
 
-    # Display categories: selected roots + selected children whose parent is
-    # NOT selected (those show standalone instead of rolling into a parent).
-    @display_categories = @all_categories.select do |c|
-      if c.parent_id.nil?
-        selected_set.include?(c.id.to_s)
-      else
-        selected_set.include?(c.id.to_s) && !selected_set.include?(c.parent_id.to_s)
-      end
-    end
+    # Display categories: all selected categories (both parents and children)
+    # Each selected category appears as its own entry in the charts/tables
+    @display_categories = @selected_categories.sort_by { |c| c.display_name.downcase }
 
-    # Map each display category to the member category IDs that roll up to it:
-    # a root includes itself + all its children; a standalone subcategory is
-    # just itself.
+    # Map each display category to its own ID only (no rollup)
     @member_ids_for_display = {}
     @display_categories.each do |dc|
-      @member_ids_for_display[dc.id] = if dc.parent_id.nil?
-        [dc.id] + (parent_to_children[dc.id] || []).map(&:id)
-      else
-        [dc.id]
-      end
+      @member_ids_for_display[dc.id] = [dc.id]
     end
 
     # Build monthly data for selected categories

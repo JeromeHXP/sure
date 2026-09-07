@@ -29,6 +29,15 @@ en:
         one: "%{count} category"
         other: "%{count} categories"
       search_placeholder: Filter categories…
+      no_matching_categories: No matching categories
+      expand_all: Expand All
+      collapse_all: Collapse All
+      toggle_category_group: Toggle "%{name}" group
+      select_all_in_group: Select all in this group
+      none_in_group: None in this group
+      all: All
+      none: None
+      apply: Apply
       chart_title: Monthly Evolution
       table_title: Monthly Breakdown
       table:

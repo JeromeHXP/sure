@@ -29,6 +29,15 @@ nb:
         one: "%{count} kategori"
         other: "%{count} kategorier"
       search_placeholder: Filtrer kategorier…
+      no_matching_categories: Ingen samsvarende kategorier
+      expand_all: Utvid alle
+      collapse_all: Skjul alle
+      toggle_category_group: Veksle gruppe "%{name}"
+      select_all_in_group: Velg alle i denne gruppen
+      none_in_group: Ingen i denne gruppen
+      all: Alle
+      none: Ingen
+      apply: Bruk
       chart_title: Månedlig utvikling
       table_title: Månedlig oversikt
       table:

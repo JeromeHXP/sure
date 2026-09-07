@@ -29,6 +29,15 @@ pl:
         one: "%{count} kategoria"
         other: "%{count} kategorii"
       search_placeholder: Filtruj kategorie…
+      no_matching_categories: Brak pasujących kategorii
+      expand_all: Rozwiń wszystko
+      collapse_all: Zwiń wszystko
+      toggle_category_group: Przełącz grupę "%{name}"
+      select_all_in_group: Zaznacz wszystkie w tej grupie
+      none_in_group: Brak w tej grupie
+      all: Wszystkie
+      none: Brak
+      apply: Zastosuj
       chart_title: Ewolucja miesięczna
       table_title: Podział miesięczny
       table:

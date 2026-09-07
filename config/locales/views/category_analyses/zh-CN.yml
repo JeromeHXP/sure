@@ -27,6 +27,15 @@ zh-CN:
       categories:
         other: "%{count} 个分类"
       search_placeholder: 筛选分类…
+      no_matching_categories: 没有匹配的分类
+      expand_all: 全部展开
+      collapse_all: 全部折叠
+      toggle_category_group: 切换"%{name}"组
+      select_all_in_group: 选择该组全部
+      none_in_group: 该组全不选
+      all: 全部
+      none: 无
+      apply: 应用
       chart_title: 月度演变
       table_title: 月度明细
       table:

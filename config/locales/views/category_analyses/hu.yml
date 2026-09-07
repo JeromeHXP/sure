@@ -29,6 +29,15 @@ hu:
         one: "%{count} kategória"
         other: "%{count} kategória"
       search_placeholder: Kategóriák szűrése…
+      no_matching_categories: Nincs egyező kategória
+      expand_all: Összes kinyitása
+      collapse_all: Összes becsukása
+      toggle_category_group: "%{name}" csoport váltása
+      select_all_in_group: Összes kiválasztása ebben a csoportban
+      none_in_group: Egyik sem ebben a csoportban
+      all: Összes
+      none: Egyik sem
+      apply: Alkalmaz
       chart_title: Havi fejlődés
       table_title: Havi bontás
       table:

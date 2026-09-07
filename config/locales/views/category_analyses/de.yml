@@ -29,6 +29,15 @@ de:
         one: "%{count} Kategorie"
         other: "%{count} Kategorien"
       search_placeholder: Kategorien filtern…
+      no_matching_categories: Keine übereinstimmenden Kategorien
+      expand_all: Alle ausklappen
+      collapse_all: Alle einklappen
+      toggle_category_group: Gruppe "%{name}" umschalten
+      select_all_in_group: Alle in dieser Gruppe auswählen
+      none_in_group: Keine in dieser Gruppe
+      all: Alle
+      none: Keine
+      apply: Anwenden
       chart_title: Monatliche Entwicklung
       table_title: Monatliche Aufschlüsselung
       table:

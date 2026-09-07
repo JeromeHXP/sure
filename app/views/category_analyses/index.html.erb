@@ -79,26 +79,27 @@
   </div>
 <% end %>
 
-<div class="w-full space-y-6 lg:pb-6">
+<div class="w-full space-y-6 lg:pb-6" data-controller="category-analyses-restore">
   <%# Filters: Categories + Accounts, all in one GET form so they submit together %>
   <section class="bg-container rounded-xl shadow-border-xs p-4">
     <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
       <h2 class="text-lg font-medium"><%= t("category_analyses.index.select_categories") %></h2>
     </div>
 
-    <%= form_with url: category_analyses_path, method: :get, data: { controller: "auto-submit-form" }, class: "flex flex-wrap items-center gap-3" do |f| %>
+    <%= form_with url: category_analyses_path, method: :get, data: { controller: "auto-submit-form" }, class: "flex flex-wrap items-center gap-3", id: "category_analyses_filter_form" do |f| %>
       <%= f.hidden_field :period_type, value: @period_type %>
+      <%= f.hidden_field :filter_form_submitted, value: "true" %>
       <% if @period_type == :custom %>
         <%= f.hidden_field :start_date, value: @period.start_date.strftime("%Y-%m-%d") %>
         <%= f.hidden_field :end_date, value: @period.end_date.strftime("%Y-%m-%d") %>
       <% end %>
 
-      <%# Category dropdown %>
+      <%# Category dropdown with enhanced selector %>
       <%= render DS::Popover.new(
             variant: "button",
             placement: "bottom-start",
             mobile_fullwidth: false,
-            max_width: "20rem",
+            max_width: "24rem",
             aria_label: t("category_analyses.index.select_categories")
           ) do |popover| %>
         <% popover.with_button type: "button", class: "inline-flex items-center gap-2 px-3 py-2 text-sm font-medium border border-primary rounded-lg hover:bg-surface-hover" do %>
@@ -108,74 +109,7 @@
         <% end %>
 
         <% popover.with_custom_content do %>
-          <div class="p-2 space-y-2" data-controller="list-filter">
-            <div class="flex items-center gap-2 px-1">
-              <%= link_to t("category_analyses.index.select_all"),
-                    category_analyses_path(period_type: @period_type, account_ids: @selected_account_ids),
-                    class: "text-xs font-medium text-secondary hover:text-primary px-2 py-1 rounded-md hover:bg-container-inset-hover" %>
-              <span class="text-subdued">·</span>
-              <%= link_to t("category_analyses.index.unselect_all"),
-                    category_analyses_path(period_type: @period_type, category_ids: "none", account_ids: @selected_account_ids),
-                    class: "text-xs font-medium text-secondary hover:text-primary px-2 py-1 rounded-md hover:bg-container-inset-hover" %>
-            </div>
-
-            <%= render DS::SearchInput.new(
-                  variant: :embedded,
-                  placeholder: t("category_analyses.index.search_placeholder"),
-                  aria_label: t("category_analyses.index.search_placeholder"),
-                  data: {
-                    list_filter_target: "input",
-                    action: "input->list-filter#filter"
-                  }
-                ) %>
-
-            <div class="max-h-72 overflow-auto" data-list-filter-target="list" data-controller="category-tree">
-              <% @category_options.each do |group| %>
-                <% gid = group[:id].to_s %>
-                <div class="filterable-item flex items-center gap-2 py-1.5 px-1" data-filter-name="<%= group[:name] %>">
-                  <%= check_box_tag "category_ids[]",
-                                    gid,
-                                    @selected_category_ids.include?(gid),
-                                    id: "category_#{gid}",
-                                    class: "checkbox checkbox--light",
-                                    data: {
-                                      auto_submit_form_target: "auto",
-                                      category_tree_target: "checkbox",
-                                      action: "change->category-tree#toggle"
-                                    } %>
-                  <label for="category_<%= gid %>" class="flex items-center gap-1.5 cursor-pointer text-sm text-primary flex-1">
-                    <% if group[:icon] %>
-                      <%= icon(group[:icon], size: "sm", color: "current") %>
-                    <% end %>
-                    <span><%= group[:name] %></span>
-                  </label>
-                </div>
-
-                <% group[:subcategories]&.each do |sub| %>
-                  <% sid = sub[:id].to_s %>
-                  <div class="filterable-item flex items-center gap-2 py-1.5 pl-5 px-1" data-filter-name="<%= sub[:name] %>">
-                    <%= check_box_tag "category_ids[]",
-                                      sid,
-                                      @selected_category_ids.include?(sid),
-                                      id: "category_#{sid}",
-                                      class: "checkbox checkbox--light",
-                                      data: {
-                                        auto_submit_form_target: "auto",
-                                        category_tree_target: "checkbox",
-                                        parent_id: gid
-                                      } %>
-                    <label for="category_<%= sid %>" class="flex items-center gap-1.5 cursor-pointer text-sm text-secondary flex-1">
-                      <%= icon("corner-down-right", size: "sm") %>
-                      <% if sub[:icon] %>
-                        <%= icon(sub[:icon], size: "sm", color: "current") %>
-                      <% end %>
-                      <span><%= sub[:name] %></span>
-                    </label>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
+          <%= render "enhanced_category_selector" %>
         <% end %>
       <% end %>
 
@@ -232,7 +166,8 @@
       <div class="relative"
         data-controller="category-histogram"
         data-category-histogram-data-value="<%= @monthly_data.to_json %>"
-        data-category-histogram-currency-value="<%= Current.family.currency %>">
+        data-category-histogram-currency-value="<%= Current.family.currency %>"
+        data-category-histogram-transactions-path-value="<%= transactions_path(q: { start_date: "__START_DATE__", end_date: "__END_DATE__" }) %>">
         <div class="h-[400px] lg:h-[500px]">
           <div data-category-histogram-target="chartContainer" class="absolute inset-0"></div>
         </div>
@@ -321,7 +256,7 @@
             </div>
             <div class="py-3 shadow-border-xs rounded-lg bg-container font-medium text-sm max-w-full">
               <% @donut_segments.each_with_index do |category, idx| %>
-                <div class="flex items-center justify-between mx-3 p-3 rounded-lg group gap-3"
+                <div class="relative flex items-center justify-between mx-3 p-3 rounded-lg group gap-3 hover:bg-container-inset-hover"
                     data-category-id="<%= category[:id] %>"
                     data-action="mouseenter->donut-chart#highlightSegment mouseleave->donut-chart#unhighlightSegment">
                   <div class="flex items-center gap-3 flex-1 min-w-0">
@@ -333,7 +268,10 @@
                         <%= render DS::FilledIcon.new(variant: :text, hex_color: category[:color], text: category[:name], size: "sm", rounded: true) %>
                       <% end %>
                     </div>
-                    <span class="text-sm font-medium text-primary truncate"><%= category[:name] %></span>
+                    <%= link_to category[:name],
+                          transactions_path(q: { categories: [category[:name]], start_date: @donut_month.beginning_of_month, end_date: @donut_month.end_of_month }),
+                          class: "text-sm font-medium text-primary truncate hover:underline before:absolute before:inset-0 before:content-['']",
+                          data: { turbo_frame: "_top", turbo_prefetch: false } %>
                   </div>
                   <div class="flex items-center gap-4 flex-shrink-0 text-right">
                     <span class="text-sm font-medium text-primary whitespace-nowrap privacy-sensitive"><%= format_money Money.new(category[:amount], Current.family.currency) %></span>
@@ -414,12 +352,15 @@
             <% @comparison_data[:rows].each_with_index do |row, idx| %>
               <tr class="<%= cycle('bg-container', 'bg-container-inset') %>">
                 <td class="px-4 py-3 whitespace-nowrap">
-                  <div class="flex items-center gap-2">
+                  <div class="relative flex items-center gap-2">
                     <span class="h-3 w-3 rounded-full shrink-0" style="background-color: <%= row[:color] %>;"></span>
                     <% if row[:icon] %>
                       <%= icon(row[:icon], size: "sm", color: "current") %>
                     <% end %>
-                    <span class="font-medium"><%= row[:name] %></span>
+                    <%= link_to row[:name],
+                          transactions_path(q: { categories: [row[:name]], start_date: @period.start_date, end_date: @period.end_date }),
+                          class: "font-medium text-primary hover:underline before:absolute before:inset-0 before:content-['']",
+                          data: { turbo_frame: "_top", turbo_prefetch: false } %>
                   </div>
                 </td>
                 <td class="px-4 py-3 text-right privacy-sensitive tabular-nums text-secondary">
@@ -462,13 +403,16 @@
 
       <div class="space-y-2">
         <% @anomalies.each do |anomaly| %>
-          <div class="flex items-center justify-between p-3 rounded-lg bg-container-inset gap-3">
+          <div class="relative flex items-center justify-between p-3 rounded-lg bg-container-inset gap-3 hover:bg-container-inset-hover">
             <div class="flex items-center gap-2 min-w-0 flex-1">
               <span class="h-3 w-3 rounded-full shrink-0" style="background-color: <%= anomaly[:color] %>;"></span>
               <% if anomaly[:icon] %>
                 <%= icon(anomaly[:icon], size: "sm", color: "current") %>
               <% end %>
-              <span class="text-sm font-medium text-primary truncate"><%= anomaly[:name] %></span>
+              <%= link_to anomaly[:name],
+                    transactions_path(q: { categories: [anomaly[:name]], start_date: @period.start_date, end_date: @period.end_date }),
+                    class: "text-sm font-medium text-primary truncate hover:underline before:absolute before:inset-0 before:content-['']",
+                    data: { turbo_frame: "_top", turbo_prefetch: false } %>
             </div>
 
             <div class="flex items-center gap-4 flex-shrink-0 text-right">
@@ -507,7 +451,7 @@
 
       <div class="space-y-1">
         <% @top_categories[:rows].each_with_index do |row, idx| %>
-          <div class="flex items-center gap-3 p-3 rounded-lg group hover:bg-container-inset-hover">
+          <div class="relative flex items-center gap-3 p-3 rounded-lg group hover:bg-container-inset-hover">
             <span class="w-6 text-sm font-medium text-subdued tabular-nums text-right"><%= idx + 1 %></span>
 
             <div class="h-7 w-7 flex-shrink-0 rounded-full flex justify-center items-center"
@@ -519,7 +463,10 @@
 
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between gap-3">
-                <span class="text-sm font-medium text-primary truncate"><%= row[:name] %></span>
+                <%= link_to row[:name],
+                      transactions_path(q: { categories: [row[:name]], start_date: @period.start_date, end_date: @period.end_date }),
+                      class: "text-sm font-medium text-primary truncate hover:underline before:absolute before:inset-0 before:content-['']",
+                      data: { turbo_frame: "_top", turbo_prefetch: false } %>
                 <span class="text-sm font-medium text-primary tabular-nums privacy-sensitive whitespace-nowrap"><%= format_money Money.new(row[:amount], Current.family.currency) %></span>
               </div>
               <div class="mt-1.5 flex items-center gap-2">
@@ -576,7 +523,10 @@
 
                   <td class="px-4 py-3 text-right privacy-sensitive tabular-nums">
                     <% if value > 0 %>
-                      <span class="text-primary"><%= format_money Money.new(value, Current.family.currency) %></span>
+                      <%= link_to format_money(Money.new(value, Current.family.currency)),
+                            transactions_path(q: { categories: [category.display_name], start_date: month_data[:month].beginning_of_month, end_date: month_data[:month].end_of_month }),
+                            class: "text-primary hover:underline",
+                            data: { turbo_frame: "_top", turbo_prefetch: false } %>
                     <% else %>
                       <span class="text-subdued"><%= format_money Money.new(0, Current.family.currency) %></span>
                     <% end %>
