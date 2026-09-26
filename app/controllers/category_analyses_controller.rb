@@ -158,7 +158,7 @@ class CategoryAnalysesController < ApplicationController
     raw_rows = Current.family.transactions
       .joins(:entry)
       .where(category_id: category_ids)
-      .where(entries: { date: start_date..end_date, account_id: @selected_account_ids })
+      .where(entries: { date: start_date..end_date, account_id: @selected_account_ids, excluded: false })
       .group(Arel.sql("transactions.category_id, DATE_TRUNC('month', entries.date)"))
       .pluck(
         "category_id",
@@ -270,7 +270,7 @@ class CategoryAnalysesController < ApplicationController
     prev_rows = Current.family.transactions
       .joins(:entry)
       .where(category_id: category_ids)
-      .where(entries: { date: prev_start..prev_end, account_id: @selected_account_ids })
+      .where(entries: { date: prev_start..prev_end, account_id: @selected_account_ids, excluded: false })
       .group("category_id")
       .pluck(
         "category_id",
