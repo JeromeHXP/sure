@@ -14,6 +14,11 @@ uk:
         goals: Цілі
         transactions: Транзакції
         category_analysis: Аналіз
+        bills: Платежі
+        plan: План
+      release_highlight:
+        title: Що нового
+        done: Зрозуміло
     auth:
       existing_account: Вже маєте обліковий запис?
       no_account: Вперше на %{product_name}?
@@ -27,7 +32,11 @@ uk:
         are_you_sure: Ви впевнені?
         cannot_be_undone: Цю дію неможливо скасувати.
         confirm: Підтвердити
+      notification_tray:
+        download_complete: Завантаження завершено
+        download_failed: Не вдалося завантажити. Спробуйте ще раз.
+        download_location: Файл збережено в папці «Завантаження».
     trial:
       open_demo: Відкрити демо
-      data_deleted_in_days: Дані видалено через %{days} днів
+      data_deleted_in_days: Дані буде видалено через %{days} дн.
       contribute: Зробити внесок
